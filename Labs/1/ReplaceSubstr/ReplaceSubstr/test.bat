@@ -1,60 +1,107 @@
 @echo off
 
-rem Óñòàíîâêà êîäèðîâêè
+rem ÑƒÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° ÐºÐ¾Ð´Ð¸Ñ€Ð¾Ð²ÐºÐ¸
 chcp 1251
 
 set PROGRAM="%~1"
 set TEMP_FILE="%TEMP%\out.txt"
 set PERMANENT_FILE="test-data\out.txt"
 
-rem Ïðè çàïóñêå áåç ïàðàìåòðîâ îæèäàåòñÿ íåíóëåâîé êîä âîçâðàòà
+rem ------- Ð¢Ð•Ð¡Ð¢Ð˜Ð ÐžÐ’ÐÐÐ˜Ð• ÐŸÐ ÐžÐ“Ð ÐÐœÐœÐ« Ð¡ ÐÐ•ÐšÐžÐ Ð Ð•ÐšÐ¢ÐÐ«ÐœÐ˜ Ð’Ð¥ÐžÐ”ÐÐ«ÐœÐ˜ Ð”ÐÐÐÐ«ÐœÐ˜
+echo ------ RUN PROGRAM WITH INCORRECT INPUT PARAMS ------
+
+rem Ð·Ð°Ð¿ÑƒÑÐº Ð±ÐµÐ· Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²ÐµÑÑ‚Ð¸ Ðº Ð½ÐµÐ½ÑƒÐ»ÐµÐ²Ð¾Ð¼Ñƒ ÐºÐ¾Ð´Ñƒ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð°
 %PROGRAM%
 if NOT ERRORLEVEL 1 goto err
-echo Test #1 passed!
+echo Test #1.1 passed!
 
-rem Ïðè çàïóñêå ñ íåêîððåêòíûì èìåíåì âõîäíîãî ôàéëà íåíóëåâîé êîä âîçâðàòà
-%PROGRAM% test-data\inputs\Unexisting.txt %TEMP_FILE% Hello Hi
+
+rem Ð·Ð°Ð¿ÑƒÑÐº Ñ Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¼Ð¸ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸ÑÐ¼Ð¸ ÑÐ¸ÑÑ‚ÐµÐ¼ ÑÑ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ñ (ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¼Ð¸ ÑÐ²Ð». Ñ‡Ð¸ÑÐ»Ð° Ð¾Ñ‚ 2 Ð´Ð¾ 36) Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²ÐµÑÑ‚Ð¸ Ðº Ð½ÐµÐ½ÑƒÐ»ÐµÐ²Ð¾Ð¼Ñƒ ÐºÐ¾Ð´Ñƒ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð°
+%PROGRAM% 37 10 1F
 if NOT ERRORLEVEL 1 goto err
-echo Test #2 passed!
+echo Test #1.2 passed!
 
-rem Ïðè çàïóñêå ñ ïóñòîé ñòðîêîé çàìåíó íå ïðîâîäèòü - íà âûõîäå äîëæåí áûòü ôàéë èäåíòè÷íûé âõîäíîìó
-%PROGRAM% test-data\inputs\Unchangable.txt %TEMP_FILE% "" "Some expression"
-if ERRORLEVEL 1 goto err
-fc %TEMP_FILE% test-data\expected-data\Unchanged.txt > nul
-if ERRORLEVEL 1 goto err
-echo Test #3 passed!
+%PROGRAM% 10 -1 1F
+if NOT ERRORLEVEL 1 goto err
+echo Test #1.3 passed!
 
-rem Çàïóñê ïðîãðàììû ñ çàìåíîé ñòðîêè "Hello" íà "Hi"
-%PROGRAM% test-data\inputs\Hello.txt %TEMP_FILE% "Hello" "Hi"
-if ERRORLEVEL 1 goto err
-fc %TEMP_FILE% test-data\expected-data\HelloToHi.txt > nul
-if ERRORLEVEL 1 goto err
-echo Test #4 passed!
 
-rem Çàïóñê ïðîãðàììû ñ çàìåíîé íåñóùåñòâóþùåé ïîäñòðîêè
-%PROGRAM% test-data\inputs\Unchangable.txt %TEMP_FILE% "Unexisting substring" "is cool"
-if ERRORLEVEL 1 goto err
-fc %TEMP_FILE% test-data\expected-data\Unchanged.txt > nul
-if ERRORLEVEL 1 goto err
-echo Test #5 passed!
+rem Ð·Ð°Ð¿ÑƒÑÐº Ñ Ð½ÐµÐ²ÐµÑ€Ð½Ñ‹Ð¼ ÑƒÐºÐ°Ð·Ð°Ð½Ð¸ÐµÐ¼ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹ ÑÑ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ñ Ð²Ñ…Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²ÐµÑÑ‚Ð¸ Ðº Ð½ÐµÐ½ÑƒÐ»ÐµÐ²Ð¾Ð¼Ñƒ ÐºÐ¾Ð´Ñƒ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð°
+%PROGRAM% 10 16 1F
+if NOT ERRORLEVEL 1 goto err
+echo Test #1.4 passed!
 
-rem Çàïóñê ïðîãðàììû ñ çàìåíîé ñòðîêè "ìà" íà ñòðîêó "ìàìà" - ïðîâåðêà íà çàöèêëèâàíèå
-%PROGRAM% test-data\inputs\Mama.txt %TEMP_FILE% "ìàìà" "ìà"
-if ERRORLEVEL 1 goto err
-fc %TEMP_FILE% test-data\expected-data\MamaToMa.txt > nul
-if ERRORLEVEL 1 goto err
-echo Test #6 passed!
+%PROGRAM% 2 16 3
+if NOT ERRORLEVEL 1 goto err
+echo Test #1.5 passed!
 
-rem Çàïóñê ïðîãðàììû ñ çàìåíîé ïîäñòðîêè "1231234" âíóòðè "12312312345" íà ïîäñòðîêó "0"
-%PROGRAM% test-data\inputs\Digits.txt %TEMP_FILE% "1231234" "0"
+
+rem Ð·Ð°Ð¿ÑƒÑÐº Ñ Ð²Ñ…Ð¾Ð´Ð½Ñ‹Ð¼ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸ÐµÐ¼, Ð½Ðµ Ð²Ñ…Ð¾Ð´ÑÑ‰Ð¸Ð¼ Ð² Ð¿Ñ€ÐµÐ´ÐµÐ»Ñ‹ Ñ‚Ð¸Ð¿Ð° int (-2147483647 - 1; 2147483647) Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²ÐµÑÑ‚Ð¸ Ðº Ð½ÐµÐ½ÑƒÐ»ÐµÐ²Ð¾Ð¼Ñƒ ÐºÐ¾Ð´Ñƒ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð°
+%PROGRAM% 36 10 ZZZZZZ
+if NOT ERRORLEVEL 1 goto err
+echo Test #1.6 passed!
+
+%PROGRAM% 16 8 -FFFFFFFF
+if NOT ERRORLEVEL 1 goto err
+echo Test #1.7 passed!
+
+
+rem ------ Ð¢Ð•Ð¡Ð¢Ð˜Ð ÐžÐ’ÐÐÐ˜Ð• ÐŸÐ ÐžÐ“Ð ÐÐœÐœÐ« Ð¡ ÐšÐžÐ Ð Ð•ÐšÐ¢ÐÐ«ÐœÐ˜ Ð”ÐÐÐÐ«ÐœÐ˜
+echo ------ RUN PROGRAM WITH CORRECT INPUT PARAMS ------
+
+rem 10 -> 16
+%PROGRAM% 10 16 2147483647 > %TEMP_FILE%
 if ERRORLEVEL 1 goto err
-fc %TEMP_FILE% test-data\expected-data\DigitsToZero.txt > nul
+fc %TEMP_FILE% test-data\expected-data\MaxIntFrom10To16.txt > nul
 if ERRORLEVEL 1 goto err
-echo Test #7 passed!
+echo Test #2.1 passed!
+
+rem 2 -> 8
+%PROGRAM% 2 8 011011 > %TEMP_FILE%
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE% test-data\expected-data\From2To8.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #2.2 passed!
+
+rem 4 -> 3
+%PROGRAM% 4 3 32 > %TEMP_FILE%
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE% test-data\expected-data\From4To3.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #2.3 passed!
+
+rem 12 -> 36
+%PROGRAM% 12 36 AB > %TEMP_FILE%
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE% test-data\expected-data\From12To36.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #2.4 passed!
+
+rem 20 -> 5
+%PROGRAM% 20 5 C0G > %TEMP_FILE%
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE% test-data\expected-data\From20To5.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #2.5 passed!
+
+rem 35 -> 6
+%PROGRAM% 35 6 F00 > %TEMP_FILE%
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE% test-data\expected-data\From35To6.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #2.6 passed!
+
+rem 34 -> 7
+%PROGRAM% 34 7 CED > %TEMP_FILE%
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE% test-data\expected-data\From34To7.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #2.7 passed!
 
 echo ----------------
 echo All tests passed!
 exit 0
+
 
 :err
 echo Test failed
