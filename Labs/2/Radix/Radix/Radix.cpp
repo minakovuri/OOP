@@ -6,10 +6,8 @@
 
 int main(int argc, char* argv[])
 {
-	// инициализция флага ошибки
 	bool wasError = false;
 
-	// проверка кол-ва аргументов программы
 	checkParametersCount(argc, wasError);
 
 	if (wasError)
@@ -17,10 +15,8 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	// инициализация исходной системы счистления
 	int sourceNotation = StringToInt(argv[1], 10, wasError);
 
-	// проверка системы счисления (требуются числа от 2 до 36)
 	checkInputRadix(sourceNotation, wasError);
 
 	if (wasError)
@@ -28,10 +24,8 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	// инициализация выходной системы счистления
 	int destinationNotation = StringToInt(argv[2], 10, wasError);
 
-	// проверка системы счисления (требуются числа от 2 до 36)
 	checkInputRadix(destinationNotation, wasError);
 
 	if (wasError)
@@ -39,7 +33,6 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	// инициализация значения
 	int decimalValue = StringToInt(argv[3], sourceNotation, wasError);
 
 	if (wasError)

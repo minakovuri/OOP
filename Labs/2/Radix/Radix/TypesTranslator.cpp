@@ -32,7 +32,14 @@ std::string IntToString(int n, int radix, bool& wasError)
 {
 	char charsArray[20] = "";
 
-	_itoa_s(n, charsArray, radix);
+	try
+	{
+		_itoa_s(n, charsArray, radix);
+	}
+	catch (const std::exception&)
+	{
+		wasError = true;
+	}
 
 	return (std::string)charsArray;
 }
