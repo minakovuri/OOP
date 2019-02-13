@@ -1,13 +1,13 @@
 ﻿#include "pch.h"
-#include <iostream>
 #include <fstream>
-#include <string>
 #include <iomanip> // манипуляторы ввода/вывода
+#include <iostream>
+#include <string>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	// если программа запустится с неправильным кол-вом аргументов - ненулевой код возврата
-	if (argc < 5) 
+	if (argc < 5)
 	{
 		std::cerr << "Not anougth arguments!" << std::endl;
 		return 1;
@@ -16,11 +16,11 @@ int main(int argc, char *argv[])
 	// инициализация и открытие входного файла (по умолчанию в режиме чтения)
 	std::string inputFileName = argv[1];
 	std::ifstream inputFile(inputFileName);
-	
+
 	// обработка некорректного открытия входного файла
 	if (!inputFile.is_open())
 	{
-		std::cerr << "Cannot open " << inputFileName << " file!" << std::endl; 
+		std::cerr << "Cannot open " << inputFileName << " file!" << std::endl;
 		return 1;
 	}
 
