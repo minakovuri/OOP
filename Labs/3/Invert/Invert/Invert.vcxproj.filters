@@ -48,6 +48,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test-data\Inputs\1.txt" />
+    <Text Include="test-data\inputs\Determenant0.txt" />
+    <Text Include="test-data\expected-data\invert1.txt" />
+    <Text Include="test-data\expected-data\invert2.txt" />
   </ItemGroup>
 </Project>
