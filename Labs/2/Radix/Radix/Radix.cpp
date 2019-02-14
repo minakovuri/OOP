@@ -6,9 +6,9 @@
 
 int main(int argc, char* argv[])
 {
-	bool wasError = false;
+	/*bool wasError = false;
 
-	checkParametersCount(argc, wasError);
+	CheckParametersCount(argc, wasError);
 
 	if (wasError)
 	{
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 
 	int sourceNotation = StringToInt(argv[1], 10, wasError);
 
-	checkInputRadix(sourceNotation, wasError);
+	CheckInputRadix(sourceNotation, wasError);
 
 	if (wasError)
 	{
@@ -26,21 +26,25 @@ int main(int argc, char* argv[])
 
 	int destinationNotation = StringToInt(argv[2], 10, wasError);
 
-	checkInputRadix(destinationNotation, wasError);
+	CheckInputRadix(destinationNotation, wasError);
 
 	if (wasError)
 	{
 		return 1;
 	}
 
-	int decimalValue = StringToInt(argv[3], sourceNotation, wasError);
+	int value = StringToInt(argv[3], sourceNotation, wasError);
 
 	if (wasError)
 	{
 		return 1;
-	}
+	}*/
 
-	std::string stringValue = IntToString(decimalValue, destinationNotation, wasError);
+	InputParameters inputParameters;
+
+
+
+	std::string stringValue = IntToString(value, destinationNotation);
 
 	std::cout << stringValue << std::endl;
 

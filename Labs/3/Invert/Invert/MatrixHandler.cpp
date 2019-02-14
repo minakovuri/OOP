@@ -7,7 +7,7 @@ float getDeterminant(int matrix[][MATRIX_SIZE])
 		- (matrix[2][0] * matrix[1][1] * matrix[0][2]) - (matrix[2][2] * matrix[1][0] * matrix[0][1]) - (matrix[0][0] * matrix[2][1] * matrix[1][2]);
 }
 
-void MakeInvertMatrix(int matrix[][MATRIX_SIZE], float invertMatrix[][MATRIX_SIZE], float determinant)
+void InvertMatrix(int matrix[][MATRIX_SIZE], float invertMatrix[][MATRIX_SIZE], float determinant)
 {
 	for (int i = 0; i < MATRIX_SIZE; i++)
 	{

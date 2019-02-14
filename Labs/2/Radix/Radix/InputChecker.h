@@ -1,6 +1,17 @@
 #pragma once
 
 #include <iostream>
+#include "TypesTranslator.h"
 
-void checkParametersCount(int argc, bool& wasError);
-void checkInputRadix(int radix, bool& wasError);
+struct InputParameters
+{
+	int sourceNotation;
+	int destinationNotation;
+	int value;
+	bool wasError;
+};
+
+InputParameters GetInputParameters(int argc, char* argv[]);
+
+void CheckParametersCount(int argc, bool& wasError);
+void CheckInputRadix(int radix, bool& wasError);

@@ -1,23 +1,23 @@
 @echo off
 
-rem Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° ÐºÐ¾Ð´Ð¸Ñ€Ð¾Ð²ÐºÐ¸
+rem Óñòàíîâêà êîäèðîâêè
 chcp 1251
 
 set PROGRAM="%~1"
 set TEMP_FILE="%TEMP%\out.txt"
 set PERMANENT_FILE="test-data\out.txt"
 
-rem ÐŸÑ€Ð¸ Ð·Ð°Ð¿ÑƒÑÐºÐµ Ð±ÐµÐ· Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð¾Ð¶Ð¸Ð´Ð°ÐµÑ‚ÑÑ Ð½ÐµÐ½ÑƒÐ»ÐµÐ²Ð¾Ð¹ ÐºÐ¾Ð´ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð°
+rem Ïðè çàïóñêå áåç ïàðàìåòðîâ îæèäàåòñÿ íåíóëåâîé êîä âîçâðàòà
 %PROGRAM%
 if NOT ERRORLEVEL 1 goto err
 echo Test #1 passed!
 
-rem ÐŸÑ€Ð¸ Ð·Ð°Ð¿ÑƒÑÐºÐµ Ñ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¼ Ñ„Ð°Ð¹Ð»Ð¾Ð¼ Ð² ÐºÐ°Ñ‡ÐµÑÑ‚Ð²Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð° Ð¾Ð¶Ð¸Ð´Ð°ÐµÑ‚ÑÑ Ð½ÐµÐ½ÑƒÐ»ÐµÐ²Ð¾Ð¹ ÐºÐ¾Ð´ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð°
+rem Ïðè çàïóñêå ñ íåñóùåñòâóþùèì ôàéëîì â êà÷åñòâå ïàðàìåòðà îæèäàåòñÿ íåíóëåâîé êîä âîçâðàòà
 %PROGRAM% test-data\inputs\Unexisting.txt %TEMP_FILE% Hello Hi
 if NOT ERRORLEVEL 1 goto err
 echo Test #2 passed!
 
-rem ÐŸÑ€Ð¸ Ð·Ð°Ð¿ÑƒÑÐºÐµ Ñ Ð¿ÑƒÑÑ‚Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¾Ð¹ Ð² ÐºÐ°Ñ‡ÐµÑÑ‚Ð²Ðµ Ð¸ÑÐºÐ¾Ð¼Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ð¾Ð¶Ð¸Ð´Ð°ÐµÑ‚ÑÑ Ñ„Ð°Ð¹Ð» Ñ„Ð°Ð¹Ð» Ð¸Ð´ÐµÐ½Ñ‚Ð¸Ñ‡Ð½Ñ‹Ð¹ Ð²Ñ…Ð¾Ð´ÑÑ‰ÐµÐ¼Ñƒ
+rem Ïðè çàïóñêå ñ ïóñòîé ñòðîêîé â êà÷åñòâå èñêîìîé ñòðîêè îæèäàåòñÿ ôàéë ôàéë èäåíòè÷íûé âõîäÿùåìó
 %PROGRAM% test-data\inputs\Unchangable.txt %TEMP_FILE% "" "Some expression"
 if ERRORLEVEL 1 goto err
 fc %TEMP_FILE% test-data\expected-data\Unchanged.txt > nul
@@ -36,7 +36,7 @@ fc %TEMP_FILE% test-data\expected-data\Unchanged.txt > nul
 if ERRORLEVEL 1 goto err
 echo Test #5 passed!
 
-%PROGRAM% test-data\inputs\Mama.txt %TEMP_FILE% "Ð¼Ð°Ð¼Ð°" "Ð¼Ð°"
+%PROGRAM% test-data\inputs\Mama.txt %TEMP_FILE% "ìàìà" "ìà"
 if ERRORLEVEL 1 goto err
 fc %TEMP_FILE% test-data\expected-data\MamaToMa.txt > nul
 if ERRORLEVEL 1 goto err
@@ -47,6 +47,12 @@ if ERRORLEVEL 1 goto err
 fc %TEMP_FILE% test-data\expected-data\DigitsToZero.txt > nul
 if ERRORLEVEL 1 goto err
 echo Test #7 passed!
+
+%PROGRAM% test-data\inputs\Ma.txt %PERMANENT_FILE% "ìà" "ìàìà"
+if ERRORLEVEL 1 goto err
+fc %PERMANENT_FILE% test-data\expected-data\MaToMama.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #8 passed!
 
 echo ----------------
 echo All tests passed!

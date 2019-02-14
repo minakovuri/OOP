@@ -28,18 +28,11 @@ int StringToInt(const std::string& str, int radix, bool& wasError)
 	return num;
 }
 
-std::string IntToString(int n, int radix, bool& wasError)
+std::string IntToString(int n, int radix)
 {
-	char charsArray[20] = "";
+	char charsArray[1024] = "";
 
-	try
-	{
-		_itoa_s(n, charsArray, radix);
-	}
-	catch (const std::exception&)
-	{
-		wasError = true;
-	}
+	_itoa_s(n, charsArray, radix);
 
 	return (std::string)charsArray;
 }

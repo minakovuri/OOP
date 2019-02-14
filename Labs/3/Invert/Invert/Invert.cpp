@@ -26,9 +26,15 @@ int main(int argc, char* argv[])
 
 	float determinant = getDeterminant(matrix);
 
+	if (determinant == 0)
+	{
+		std::cerr << "Cannot invert matrix, determinant = 0 " << std::endl;
+		return 1;
+	}
+
 	float invertMatrix[MATRIX_SIZE][MATRIX_SIZE];
 
-	MakeInvertMatrix(matrix, invertMatrix, determinant);
+	InvertMatrix(matrix, invertMatrix, determinant);
 
 	WriteInvertMatrix(invertMatrix);
 
