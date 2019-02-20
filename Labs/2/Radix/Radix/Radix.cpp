@@ -6,46 +6,16 @@
 
 int main(int argc, char* argv[])
 {
-	/*bool wasError = false;
+	std::optional<InputParameters> optionalInputParameters = GetInputParameters(argc, argv);
 
-	CheckParametersCount(argc, wasError);
-
-	if (wasError)
+	if (!optionalInputParameters)
 	{
 		return 1;
 	}
 
-	int sourceNotation = StringToInt(argv[1], 10, wasError);
+	InputParameters inputParameters = *optionalInputParameters;
 
-	CheckInputRadix(sourceNotation, wasError);
-
-	if (wasError)
-	{
-		return 1;
-	}
-
-	int destinationNotation = StringToInt(argv[2], 10, wasError);
-
-	CheckInputRadix(destinationNotation, wasError);
-
-	if (wasError)
-	{
-		return 1;
-	}
-
-	int value = StringToInt(argv[3], sourceNotation, wasError);
-
-	if (wasError)
-	{
-		return 1;
-	}*/
-
-	InputParameters inputParameters;
-
-
-
-	std::string stringValue = IntToString(value, destinationNotation);
-
+	std::string stringValue = IntToString(inputParameters.value, inputParameters.destinationNotation);
 	std::cout << stringValue << std::endl;
 
 	return 0;

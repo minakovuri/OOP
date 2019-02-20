@@ -5,14 +5,9 @@ const int CORRECT_ARGUMENTS_COUNT = 4;
 const int MIN_RADIX = 2;
 const int MAX_RADIX = 36;
 
-Inpu GetInputParameters(int argc, char* argv[])
+std::optional<InputParameters> GetInputParameters(int argc, char* argv[])
 {
 	InputParameters inputParameters;
-
-	inputParameters.sourceNotation = 0;
-	inputParameters.destinationNotation = 0;
-	inputParameters.value = 0;
-	inputParameters.wasError = false;
 
 	bool wasError = false;
 
@@ -20,55 +15,31 @@ Inpu GetInputParameters(int argc, char* argv[])
 
 	if (wasError)
 	{
-		return inputParameters;
+		return std::nullopt;
 	}
 
-	int sourceNotation = StringToInt(argv[1], 10, wasError);
+	inputParameters.sourceNotation = StringToInt(argv[1], 10, wasError);
+	CheckInputRadix(inputParameters.sourceNotation, wasError);
 
 	if (wasError)
 	{
-		inputParameters.wasError = true;
-		return inputParameters;
+		return std::nullopt;
 	}
 
-	CheckInputRadix(sourceNotation, wasError);
+	inputParameters.destinationNotation = StringToInt(argv[2], 10, wasError);
+	CheckInputRadix(inputParameters.destinationNotation, wasError);
 
 	if (wasError)
 	{
-		inputParameters.wasError = true;
-		return inputParameters;
+		return std::nullopt;
 	}
 
-	inputParameters.sourceNotation = sourceNotation;
-
-	int destinationNotation = StringToInt(argv[2], 10, wasError);
+	inputParameters.value = StringToInt(argv[3], inputParameters.sourceNotation, wasError);
 
 	if (wasError)
 	{
-		inputParameters.wasError = true;
-		return inputParameters;
+		return std::nullopt;
 	}
-
-	CheckInputRadix(destinationNotation, wasError);
-
-	if (wasError)
-	{
-		inputParameters.wasError = true;
-		return inputParameters;
-	}
-
-	inputParameters.destinationNotation = destinationNotation;
-
-	int value = StringToInt(argv[3], sourceNotation, wasError);
-
-	if (wasError)
-	{
-		inputParameters.wasError = true;
-		return inputParameters;
-	}
-
-	inputParameters.value = value;
-	inputParameters.wasError = false;
 
 	return inputParameters;
 }

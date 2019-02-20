@@ -11,7 +11,7 @@ int StringToInt(const std::string& str, int radix, bool& wasError)
 		num = std::stoi(str, &pos, radix);
 		if (str[pos] != '\0')
 		{
-			throw std::invalid_argument("");
+			throw std::invalid_argument("Invalid argument");
 		}
 	}
 	catch (const std::out_of_range& e)
