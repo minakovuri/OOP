@@ -3,16 +3,46 @@
 
 int StringToInt(const std::string& str, int radix, bool& wasError)
 {
-	int num = 0;
-
 	try
 	{
-		size_t pos = 0;
-		num = std::stoi(str, &pos, radix);
-		if (str[pos] != '\0')
+		int num = 0;
+
+		int digit = 0;
+		std::string availableDigits = DIGITS.substr(0, radix);
+
+		bool isNumNegative = (str[0] == '-');
+
+		// если число отрицательное, то перебор цифр начинаем со второго символа, если положительное - с первого
+		for (int i = isNumNegative; i < str.length(); i++)
 		{
-			throw std::invalid_argument("Invalid argument");
+			digit = availableDigits.find(str[i]);
+
+			if (digit == std::string::npos)
+			{
+				throw std::invalid_argument("Invalud argument");
+			}
+
+			if ((isNumNegative) && ((-1) * num < (-1) * (INT_MIN - digit) / radix))
+			{
+				std::cout << "Out of range" << std::endl;
+				throw std::out_of_range("Out of range!");
+			}
+
+			if ((!isNumNegative) && (num > (INT_MAX - digit) / radix))
+			{
+				std::cout << "Out of range" << std::endl;
+				throw std::out_of_range("Out of range!");
+			}
+
+			num = num * radix + digit;
 		}
+
+		if (isNumNegative)
+		{
+			num = num * (-1);
+		}
+
+		return num;
 	}
 	catch (const std::out_of_range& e)
 	{
@@ -24,8 +54,6 @@ int StringToInt(const std::string& str, int radix, bool& wasError)
 		std::cerr << "Invalid argument to parse string from int: " << str << " in base " << radix << std::endl;
 		wasError = true;
 	}
-
-	return num;
 }
 
 std::string IntToString(int n, int radix)

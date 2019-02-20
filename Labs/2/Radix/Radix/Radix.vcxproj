@@ -198,6 +198,7 @@
     <None Include="test.bat" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="test-data\expected-data\From10To2.txt" />
     <Text Include="test-data\expected-data\From12To36.txt" />
     <Text Include="test-data\expected-data\From20To5.txt" />
     <Text Include="test-data\expected-data\From2To8.txt" />

@@ -52,5 +52,6 @@
     <Text Include="test-data\expected-data\From20To5.txt" />
     <Text Include="test-data\expected-data\From35To6.txt" />
     <Text Include="test-data\expected-data\From34To7.txt" />
+    <Text Include="test-data\expected-data\From10To2.txt" />
   </ItemGroup>
 </Project>
