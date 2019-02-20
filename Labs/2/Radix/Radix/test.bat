@@ -45,15 +45,6 @@ echo Test #1.6 passed!
 if NOT ERRORLEVEL 1 goto err
 echo Test #1.7 passed!
 
-rem запуск со значениями на границах int должны привести к нулевому коду возврата
-%PROGRAM% 10 8 2147483647 > %TEMP_FILE%
-if ERRORLEVEL 1 goto err
-echo Test #1.8 passed!
-
-%PROGRAM% 10 8 -2147483648 > %TEMP_FILE%
-if ERRORLEVEL 1 goto err
-echo Test #1.9 passed!
-
 
 rem ------ ТЕСТИРОВАНИЕ ПРОГРАММЫ С КОРРЕКТНЫМИ ДАННЫМИ
 echo ------ RUN PROGRAM WITH CORRECT INPUT PARAMS ------
@@ -101,7 +92,7 @@ if ERRORLEVEL 1 goto err
 echo Test #2.6 passed!
 
 rem 34 -> 7
-%PROGRAM% 34 7 CED > %TEMP_FILE%
+%PROGRAM% 34 7 -CED > %TEMP_FILE%
 if ERRORLEVEL 1 goto err
 fc %TEMP_FILE% test-data\expected-data\From34To7.txt > nul
 if ERRORLEVEL 1 goto err

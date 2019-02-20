@@ -17,6 +17,7 @@ int StringToInt(const std::string& str, int radix, bool& wasError)
 		{
 			digit = availableDigits.find(str[i]);
 
+			// если текущей цифры нет в заданной системе счисления, то выдать ошибку
 			if (digit == std::string::npos)
 			{
 				throw std::invalid_argument("Invalud argument");
@@ -56,11 +57,45 @@ int StringToInt(const std::string& str, int radix, bool& wasError)
 	}
 }
 
-std::string IntToString(int n, int radix)
+std::string IntToString(int num, int radix)
 {
-	char charsArray[1024] = "";
+	if (radix == 10)
+	{
+		return std::to_string(num);
+	}
 
-	_itoa_s(n, charsArray, radix);
+	// будем добавлять к строке по одной цифре в нужной системе счисления
+	std::string str = "";
+	char digit;
 
-	return (std::string)charsArray;
+	bool isNegative = false;
+	if (num < 0)
+	{
+		isNegative = true;
+		num *= -1;
+	}
+
+	// будем делить заданное число на основание системы и прибовлять цифры, пока не получим 0 
+	while (true)
+	{
+		digit = DIGITS[num % radix];
+
+		str += digit;
+		num /= radix;
+
+		if (num == 0)
+		{
+			break;
+		}
+	}
+
+	if (isNegative)
+	{
+		str += '-';
+	}
+
+	// реверсируем строку, т.к. мы вписывали цифры и знак в обратном порядке
+	std::reverse(str.begin(), str.end());
+
+	return str;
 }
