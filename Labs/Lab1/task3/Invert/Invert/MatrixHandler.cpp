@@ -3,8 +3,16 @@
 
 float getDeterminant(int matrix[][MATRIX_SIZE])
 {
-	return (float)(matrix[0][0] * matrix[1][1] * matrix[2][2]) + (matrix[2][0] * matrix[0][1] * matrix[1][2]) + (matrix[0][2] * matrix[1][0] * matrix[2][1])
+	float determinant = (float)(matrix[0][0] * matrix[1][1] * matrix[2][2]) + (matrix[2][0] * matrix[0][1] * matrix[1][2]) + (matrix[0][2] * matrix[1][0] * matrix[2][1])
 		- (matrix[2][0] * matrix[1][1] * matrix[0][2]) - (matrix[2][2] * matrix[1][0] * matrix[0][1]) - (matrix[0][0] * matrix[2][1] * matrix[1][2]);
+
+	if (determinant == 0)
+	{
+		std::cerr << "Cannot invert matrix, determinant = 0 " << std::endl;
+		throw std::exception("Cannot invert matrix, determinant = 0");
+	}
+
+	return determinant;
 }
 
 void InvertMatrix(int matrix[][MATRIX_SIZE], float invertMatrix[][MATRIX_SIZE], float determinant)

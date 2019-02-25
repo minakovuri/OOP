@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 
 #include "pch.h"
-#include "InputChecker.h"
+#include "InputParser.h"
 #include "TypesTranslator.h"
 
 int main(int argc, char* argv[])

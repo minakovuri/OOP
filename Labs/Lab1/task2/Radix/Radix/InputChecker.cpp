@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "InputChecker.h"
+#include "InputParser.h"
 
 const int CORRECT_ARGUMENTS_COUNT = 4;
 const int MIN_RADIX = 2;

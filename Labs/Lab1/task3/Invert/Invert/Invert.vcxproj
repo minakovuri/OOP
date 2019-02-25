@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{0CBE6E86-4F3B-4D34-94D5-6AAA69F2C368}</ProjectGuid>
+    <ProjectGuid>{456645A1-399A-49FB-B4C3-1D8B5A5CB756}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Radix</RootNamespace>
+    <RootNamespace>Invert</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -98,10 +98,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat $(TargetPath) </Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Running tests</Message>
+      <Command>test.bat $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,10 +117,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat $(TargetPath) </Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Running tests</Message>
+      <Command>test.bat $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -146,10 +140,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat $(TargetPath) </Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Running tests</Message>
+      <Command>test.bat $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,40 +163,33 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat $(TargetPath) </Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Running tests</Message>
+      <Command>test.bat $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="InputChecker.h" />
+    <ClInclude Include="MatrixHandler.h" />
+    <ClInclude Include="MatrixParams.h" />
+    <ClInclude Include="InputMatrixParser.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="TypesTranslator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InputChecker.cpp" />
+    <ClCompile Include="Invert.cpp" />
+    <ClCompile Include="MatrixHandler.cpp" />
+    <ClCompile Include="InputMaatrixParser.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Radix.cpp" />
-    <ClCompile Include="TypesTranslator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test-data\expected-data\From10To2.txt" />
-    <Text Include="test-data\expected-data\From12To36.txt" />
-    <Text Include="test-data\expected-data\From20To5.txt" />
-    <Text Include="test-data\expected-data\From2To8.txt" />
-    <Text Include="test-data\expected-data\From34To7.txt" />
-    <Text Include="test-data\expected-data\From35To6.txt" />
-    <Text Include="test-data\expected-data\From4To3.txt" />
-    <Text Include="test-data\expected-data\MaxIntFrom10To16.txt" />
+    <Text Include="test-data\expected-data\invert1.txt" />
+    <Text Include="test-data\expected-data\invert2.txt" />
+    <Text Include="test-data\inputs\Determenant0.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
