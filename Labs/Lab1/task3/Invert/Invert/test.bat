@@ -23,9 +23,9 @@ if NOT ERRORLEVEL 1 goto err
 echo Test #3 passed!
 
 rem Запуск с корректными параметрами
-%PROGRAM% test-data\inputs\matrix1.txt > %TEMP_FILE%
+%PROGRAM% test-data\inputs\matrix1.txt > %PERMANENT_FILE%
 if ERRORLEVEL 1 goto err
-fc %TEMP_FILE% test-data\expected-data\invert1.txt > nul
+fc %PERMANENT_FILE% test-data\expected-data\invert1.txt > nul
 if ERRORLEVEL 1 goto err
 echo Test #4 passed!
 

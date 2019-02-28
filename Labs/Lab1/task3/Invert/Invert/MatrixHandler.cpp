@@ -1,46 +1,89 @@
 #include "pch.h"
+#include "MatrixParams.h"
 #include "MatrixHandler.h"
 
-float getDeterminant(int matrix[][MATRIX_SIZE])
+float GetDeterminant(Matrix3x3 matrix)
 {
-	float determinant = (float)(matrix[0][0] * matrix[1][1] * matrix[2][2]) + (matrix[2][0] * matrix[0][1] * matrix[1][2]) + (matrix[0][2] * matrix[1][0] * matrix[2][1])
+	return (float)(matrix[0][0] * matrix[1][1] * matrix[2][2]) + (matrix[2][0] * matrix[0][1] * matrix[1][2]) + (matrix[0][2] * matrix[1][0] * matrix[2][1])
 		- (matrix[2][0] * matrix[1][1] * matrix[0][2]) - (matrix[2][2] * matrix[1][0] * matrix[0][1]) - (matrix[0][0] * matrix[2][1] * matrix[1][2]);
-
-	if (determinant == 0)
-	{
-		std::cerr << "Cannot invert matrix, determinant = 0 " << std::endl;
-		throw std::exception("Cannot invert matrix, determinant = 0");
-	}
-
-	return determinant;
 }
 
-void InvertMatrix(int matrix[][MATRIX_SIZE], float invertMatrix[][MATRIX_SIZE], float determinant)
+float GetAdditionMatrixElement(Matrix3x3 matrix, int i, int j)
 {
-	for (int i = 0; i < MATRIX_SIZE; i++)
+	if (i == 0)
 	{
-		for (int j = 0; j < MATRIX_SIZE; j++)
+		if (j == 0)
 		{
-			invertMatrix[i][j] = ((matrix[(j + 1) % 3][(i + 1) % 3] * matrix[(j + 2) % 3][(i + 2) % 3]) - (matrix[(j + 1) % 3][(i + 2) % 3] * matrix[(j + 2) % 3][(i + 1) % 3])) / determinant;
+			return (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]) * float(std::pow(-1, i + j + 2));
+		}
+		else if (j == 1)
+		{
+			return (matrix[0][1] * matrix[2][2] - matrix[2][1] * matrix[0][2]) * float(std::pow(-1, i + j + 2));
+		}
+		else
+		{
+			return (matrix[0][1] * matrix[1][2] - matrix[1][1] * matrix[0][2]) * float(std::pow(-1, i + j + 2));
+		}
+	}
+	else if (i == 1)
+	{
+		if (j == 0)
+		{
+			return (matrix[1][0] * matrix[2][2] - matrix[2][0] * matrix[1][2]) * float(std::pow(-1, i + j + 2));
+		}
+		else if (j == 1)
+		{
+			return (matrix[0][0] * matrix[2][2] - matrix[2][0] * matrix[0][2]) * float(std::pow(-1, i + j + 2));
+		}
+		else
+		{
+			return (matrix[0][0] * matrix[1][2] - matrix[1][0] * matrix[0][2]) * float(std::pow(-1, i + j + 2));
+		}
+	}
+	else
+	{
+		if (j == 0)
+		{
+			return (matrix[1][0] * matrix[2][1] - matrix[2][0] * matrix[1][1]) * float(std::pow(-1, i + j + 2));
+		}
+		else if (j == 1)
+		{
+			return (matrix[0][0] * matrix[2][1] - matrix[2][0] * matrix[0][1]) * float(std::pow(-1, i + j + 2));
+		}
+		else
+		{
+			return (matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]) * float(std::pow(-1, i + j + 2));
 		}
 	}
 }
 
-void WriteInvertMatrix(float invertMatrix[][MATRIX_SIZE])
+bool InvertMatrix(Matrix3x3 matrix, Matrix3x3 invertMatrix, float determinant)
 {
-	std::string stringFloat;
+	if (determinant == 0)
+	{
+		return false;
+	}
 
 	for (int i = 0; i < MATRIX_SIZE; i++)
 	{
 		for (int j = 0; j < MATRIX_SIZE; j++)
 		{
-			stringFloat = std::to_string(invertMatrix[i][j]);
+			invertMatrix[i][j] = GetAdditionMatrixElement(matrix, i, j) / determinant;
+		}
+	}
 
-			size_t dotPosition = stringFloat.find(".");
-			std::string fullPart = stringFloat.substr(0, dotPosition);
-			std::string fractionPart = stringFloat.substr(dotPosition + 1, 3);
+	return true;
+}
 
-			std::cout << fullPart << "." << fractionPart << " ";
+void WriteMatrix(Matrix3x3 invertMatrix)
+{
+	for (int i = 0; i < MATRIX_SIZE; i++)
+	{
+		for (int j = 0; j < MATRIX_SIZE; j++)
+		{	
+			std::cout << std::fixed;
+			std::cout << std::setprecision(3);
+			std::cout << invertMatrix[i][j] << ' ';
 		}
 
 		std::cout << std::endl;

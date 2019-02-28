@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 
-#include "MatrixParams.h"
+#include "MatrixType.h"
 
-float getDeterminant(int matrix[][MATRIX_SIZE]);
-void InvertMatrix(int matrix[][MATRIX_SIZE], float invertMatrix[][MATRIX_SIZE], float determinant);
-void WriteInvertMatrix(float invertMatrix[][MATRIX_SIZE]);
+float GetDeterminant(Matrix3x3 matrix);
+float GetAdditionMatrixElement(Matrix3x3 matrix, int i, int j);
+bool InvertMatrix(Matrix3x3 matrix, Matrix3x3 invertMatrix, float determinant);
+void WriteMatrix(Matrix3x3 invertMatrix);

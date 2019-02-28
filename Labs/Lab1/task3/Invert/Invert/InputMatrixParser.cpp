@@ -1,35 +1,34 @@
 #include "pch.h"
+#include "MatrixParams.h"
 #include "InputMatrixParser.h"
 
-void GetInputParameters(int matrix[][MATRIX_SIZE], int argc, char* argv[])
+InputFileName GetInputFileName(int argc, char* argv[])
 {
 	if (argc < 2)
 	{
-		std::cerr << "Not anougth arguments!" << std::endl;
 		throw std::invalid_argument("Not enough arguments!");
 	}
 
-	ReadMatrixFromFile(matrix, argv[1]);
+	return argv[1];
 }
 
-void ReadMatrixFromFile(int matrix[][MATRIX_SIZE], std::string matrixFileName)
+void ReadMatrixFromFile(Matrix3x3 matrix, InputFileName& matrixFileName)
 {
 	std::ifstream matrixFile(matrixFileName);
 
 	if (!matrixFile.is_open())
 	{
-		std::cerr << "Cannot open " << matrixFileName << " file!" << std::endl;
 		throw std::invalid_argument("Cannot open file");
 	}
 
 	std::string row;
-	std::vector<std::vector<int>> inputMatrix;
+	std::vector<std::vector<float>> inputMatrix;
 
 	while (std::getline(matrixFile, row))
 	{
 		std::stringstream ss(row);
-		int number;
-		std::vector<int> inputMatrixRow;
+		float number;
+		std::vector<float> inputMatrixRow;
 
 		while (ss >> number)
 		{
@@ -38,7 +37,6 @@ void ReadMatrixFromFile(int matrix[][MATRIX_SIZE], std::string matrixFileName)
 
 		if (inputMatrixRow.size() != MATRIX_SIZE)
 		{
-			std::cerr << "Entered matrix hasn't got 3 columns!" << std::endl;
 			throw std::invalid_argument("Entered matrix hasn't got 3 columns!");
 		}
 
@@ -47,7 +45,6 @@ void ReadMatrixFromFile(int matrix[][MATRIX_SIZE], std::string matrixFileName)
 
 	if (inputMatrix.size() != MATRIX_SIZE)
 	{
-		std::cerr << "Entered matrix hasn't got 3 rows!" << std::endl;
 		throw std::invalid_argument("Entered matrix hasn't got 3 rows!");
 	}
 
