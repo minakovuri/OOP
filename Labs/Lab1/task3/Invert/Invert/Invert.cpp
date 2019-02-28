@@ -15,9 +15,9 @@ int main(int argc, char* argv[])
 		InputFileName inputFileName = GetInputFileName(argc, argv);
 		ReadMatrixFromFile(matrix, inputFileName);
 	}
-	catch (const std::exception&)
+	catch (const std::exception& exception)
 	{
-		std::cerr << "Invalid parameters " << std::endl;
+		std::cerr << exception.what() << std::endl;
 		return 1;
 	}
 

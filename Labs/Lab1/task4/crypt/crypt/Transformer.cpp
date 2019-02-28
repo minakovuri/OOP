@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "Handler.h"
+#include "Transformer.h"
 #include "Masks.h"
 #include "Constants.h"
 
-void HandleFiles(InputParameters& inputParameters)
+void TransformInputFile(InputParameters& inputParameters)
 {
 	Byte byte;
 

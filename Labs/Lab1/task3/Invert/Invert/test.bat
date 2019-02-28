@@ -22,25 +22,26 @@ rem При запуске с матрицей, определитель кото
 if NOT ERRORLEVEL 1 goto err
 echo Test #3 passed!
 
-rem Запуск с корректными параметрами
-%PROGRAM% test-data\inputs\matrix1.txt > %PERMANENT_FILE%
-if ERRORLEVEL 1 goto err
-fc %PERMANENT_FILE% test-data\expected-data\invert1.txt > nul
-if ERRORLEVEL 1 goto err
+rem  При запуске с некорректной матрицей ожидается ненулевой код возврата
+%PROGRAM% test-data\inputs\incorrect1.txt > %TEMP_FILE%
+if NOT ERRORLEVEL 1 goto err
 echo Test #4 passed!
+
+%PROGRAM% test-data\inputs\incorrect2.txt > %TEMP_FILE%
+if NOT ERRORLEVEL 1 goto err
+echo Test #5 passed!
+
+rem Запуск с корректными параметрами
+%PROGRAM% test-data\inputs\matrix1.txt > %TEMP_FILE%
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE% test-data\expected-data\invert1.txt > nul
+if ERRORLEVEL 1 goto err
+echo Test #6 passed!
 
 %PROGRAM% test-data\inputs\matrix2.txt > %TEMP_FILE%
 if ERRORLEVEL 1 goto err
 fc %TEMP_FILE% test-data\expected-data\invert2.txt > nul
 if ERRORLEVEL 1 goto err
-echo Test #5 passed!
-
-%PROGRAM% test-data\inputs\incorrect1.txt > %TEMP_FILE%
-if NOT ERRORLEVEL 1 goto err
-echo Test #6 passed!
-
-%PROGRAM% test-data\inputs\incorrect2.txt > %TEMP_FILE%
-if NOT ERRORLEVEL 1 goto err
 echo Test #7 passed!
 
 echo ----------------

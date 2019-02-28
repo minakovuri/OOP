@@ -1,7 +1,7 @@
 
 #include "pch.h"
 #include "InputParser.h"
-#include "Handler.h"
+#include "Transformer.h"
 
 int main(int argc, char* argv[])
 {
@@ -11,12 +11,13 @@ int main(int argc, char* argv[])
 	{
 		inputParameters = GetInputParameters(argc, argv);
 	}
-	catch (const std::exception&)
+	catch (const std::exception& exception)
 	{
+		std::cerr << exception.what() << std::endl;
 		return 1;
 	}
 
-	HandleFiles(inputParameters);
+	TransformInputFile(inputParameters);
 
 	return 0;
 }
