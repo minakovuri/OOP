@@ -20,10 +20,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{456645A1-399A-49FB-B4C3-1D8B5A5CB756}</ProjectGuid>
+    <ProjectGuid>{C50EA834-E1AF-4974-BFA2-98C5DBA6E3B8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Invert</RootNamespace>
+    <RootNamespace>crypt</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>Crypt</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -100,6 +101,9 @@
     <PostBuildEvent>
       <Command>test.bat $(TargetPath)</Command>
     </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Running tests</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -118,6 +122,9 @@
     </Link>
     <PostBuildEvent>
       <Command>test.bat $(TargetPath)</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Running tests</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -142,6 +149,9 @@
     <PostBuildEvent>
       <Command>test.bat $(TargetPath)</Command>
     </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Running tests</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -165,17 +175,22 @@
     <PostBuildEvent>
       <Command>test.bat $(TargetPath)</Command>
     </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Running tests</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="MatrixHandler.h" />
-    <ClInclude Include="MatrixParams.h" />
-    <ClInclude Include="InputMatrixParser.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="Handler.h" />
+    <ClInclude Include="InputFormat.h" />
+    <ClInclude Include="InputParser.h" />
+    <ClInclude Include="Masks.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Invert.cpp" />
-    <ClCompile Include="MatrixHandler.cpp" />
-    <ClCompile Include="InputMatrixParser.cpp" />
+    <ClCompile Include="crypt.cpp" />
+    <ClCompile Include="Handler.cpp" />
+    <ClCompile Include="InputParser.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -184,12 +199,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test.bat" />
+    <Text Include="test-data\inputs\input1.txt" />
+    <Text Include="test-data\inputs\incorrect1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test-data\expected-data\invert1.txt" />
-    <Text Include="test-data\expected-data\invert2.txt" />
-    <Text Include="test-data\inputs\Determenant0.txt" />
+    <None Include="test.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

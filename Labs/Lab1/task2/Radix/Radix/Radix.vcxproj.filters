@@ -35,7 +35,7 @@
     <ClCompile Include="TypesTranslator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="InputChecker.cpp">
+    <ClCompile Include="InputParser.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

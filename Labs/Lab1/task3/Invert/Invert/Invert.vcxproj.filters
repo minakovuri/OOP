@@ -38,7 +38,7 @@
     <ClCompile Include="MatrixHandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="InputMaatrixParser.cpp">
+    <ClCompile Include="InputMatrixParser.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
