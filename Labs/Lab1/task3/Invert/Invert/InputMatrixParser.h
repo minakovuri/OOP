@@ -6,7 +6,9 @@
 #include <sstream>
 #include <vector>
 
-#include "MatrixParams.h"
+#include "MatrixType.h"
 
-void GetInputParameters(int[][MATRIX_SIZE], int, char* []);
-void ReadMatrixFromFile(int [][MATRIX_SIZE], std::string);
+using InputFileName = std::string;
+
+InputFileName GetInputFileName(int argc, char* argv[]);
+void ReadMatrixFromFile(Matrix3x3, InputFileName&);

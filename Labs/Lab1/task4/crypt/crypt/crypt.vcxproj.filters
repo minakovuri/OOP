@@ -27,10 +27,10 @@
     <ClInclude Include="Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Handler.h">
+    <ClInclude Include="Masks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Masks.h">
+    <ClInclude Include="Transformer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="InputParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Handler.cpp">
+    <ClCompile Include="Transformer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

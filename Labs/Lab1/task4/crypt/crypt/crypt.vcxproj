@@ -181,7 +181,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="Handler.h" />
+    <ClInclude Include="Transformer.h" />
     <ClInclude Include="InputFormat.h" />
     <ClInclude Include="InputParser.h" />
     <ClInclude Include="Masks.h" />
@@ -189,7 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="crypt.cpp" />
-    <ClCompile Include="Handler.cpp" />
+    <ClCompile Include="Transformer.cpp" />
     <ClCompile Include="InputParser.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

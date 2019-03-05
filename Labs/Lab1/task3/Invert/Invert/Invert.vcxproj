@@ -170,6 +170,7 @@
     <ClInclude Include="MatrixHandler.h" />
     <ClInclude Include="MatrixParams.h" />
     <ClInclude Include="InputMatrixParser.h" />
+    <ClInclude Include="MatrixType.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

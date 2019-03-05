@@ -6,7 +6,6 @@ InputParameters GetInputParameters(int argc, char* argv[])
 {
 	if (argc < CORRECT_ARGUMENTS_COUNT)
 	{
-		std::cerr << "Not enougth arguments!" << std::endl;
 		throw std::invalid_argument("Not enougth arguments");
 	}
 
@@ -37,7 +36,6 @@ ExecutionMode GetExecutionMode(const std::string& modeName)
 	}
 	else
 	{
-		std::cerr << "Invalid execution mode: " << modeName << std::endl;
 		throw std::invalid_argument("Invalid execution mode");
 	}
 }
@@ -48,7 +46,6 @@ void OpenFilesSafety(InputParameters& inputParameters, const std::string& inputF
 
 	if (!inputParameters.inputFile.is_open())
 	{
-		std::cerr << "Cannot open input file: " << inputFileName << std::endl;
 		throw std::invalid_argument("Cannot open input file");
 	}
 
@@ -56,7 +53,6 @@ void OpenFilesSafety(InputParameters& inputParameters, const std::string& inputF
 
 	if (!inputParameters.outputFile.is_open())
 	{
-		std::cerr << "Cannot open/create output file: " << inputFileName << std::endl;
 		throw std::invalid_argument("Cannot open/create output file");
 	}
 }
@@ -67,7 +63,6 @@ Key GetKey(const std::string& keyString)
 	{
 		if (!isdigit(digit))
 		{
-			std::cerr << "Invalid key parameter: " << keyString << std::endl;
 			throw std::invalid_argument("Invalid key parameter");
 		}
 	}
@@ -76,7 +71,6 @@ Key GetKey(const std::string& keyString)
 
 	if (keyInt > MAX_KEY_VALUE)
 	{
-		std::cerr << "Invalid key parameter: " << keyString << std::endl;
 		throw std::invalid_argument("Invalid key parameter");
 	}
 
