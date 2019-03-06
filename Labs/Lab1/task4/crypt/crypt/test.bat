@@ -35,6 +35,10 @@ echo Test #1.4 passed!
 if NOT ERRORLEVEL 1 goto err
 echo Test #1.5 passed!
 
+%PROGRAM% crypt test-data\inputs\input1.txt %TEMP_FILE_CRYPT%
+if NOT ERRORLEVEL 1 goto err
+echo Test #1.6 passed!
+
 rem ------ ТЕСТИРОВАНИЕ ПРОГРАММЫ С КОРРЕКТНЫМИ ДАННЫМИ
 echo ------ RUN PROGRAM WITH CORRECT INPUT PARAMS ------
 
@@ -46,6 +50,13 @@ if ERRORLEVEL 1 goto err
 fc %TEMP_FILE_DECRYPT% test-data\inputs\input1.txt > nul
 if ERRORLEVEL 1 goto err
 echo Test #2.1 passed!
+
+rem запуск программы в режиме шифрования и проверка разности исходного файла и выходного
+%PROGRAM% crypt test-data\inputs\input1.txt %TEMP_FILE_CRYPT% 12
+if ERRORLEVEL 1 goto err
+fc %TEMP_FILE_CRYPT% test-data\inputs\input1.txt > nul
+if NOT ERRORLEVEL 1 goto err
+echo Test #2.2 passed!
 
 echo ----------------
 echo All tests passed!

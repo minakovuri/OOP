@@ -184,7 +184,6 @@
     <ClInclude Include="Transformer.h" />
     <ClInclude Include="InputFormat.h" />
     <ClInclude Include="InputParser.h" />
-    <ClInclude Include="Masks.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

@@ -27,9 +27,6 @@
     <ClInclude Include="Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Masks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Transformer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
