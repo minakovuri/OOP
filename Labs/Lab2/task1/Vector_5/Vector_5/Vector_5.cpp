@@ -1,20 +1,7 @@
 #include "pch.h"
-
-using VectorOfDoubles = std::vector<double>;
-
-void ProcessVector(VectorOfDoubles& numbers)
-{
-	auto maxNumber = *std::max_element(numbers.begin(), numbers.end());
-	auto minNumber = *std::min_element(numbers.begin(), numbers.end());
-
-	for (auto& number : numbers)
-	{
-		if (signbit(number))
-		{
-			number *= (minNumber * maxNumber);
-		}
-	}
-}
+#include <iostream>
+#include <iomanip>
+#include "ProcessVector.h"
 
 int main()
 {
