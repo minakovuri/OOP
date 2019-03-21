@@ -59,7 +59,7 @@ TEST_CASE("Test how CRemoteControl instance work")
 	VerifyCommand(remoteControl, input, output, "SetSpeed 35", "Can not change speed to 35\n");
 
 	/* Проверяем состояние машины */
-	VerifyCommand(remoteControl, input, output, "Info", "Car info:\n\tEngine state: On\n\tDirection: Not moving\n\tSpeed: 25\n\tGear: 1\n");
+	VerifyCommand(remoteControl, input, output, "Info", "Car info:\n\tEngine state: On\n\tDirection: Forward\n\tSpeed: 25\n\tGear: 1\n");
 
 
 
@@ -83,6 +83,25 @@ TEST_CASE("Test how CRemoteControl instance work")
 
 	/* Тормозим машину */
 	VerifyCommand(remoteControl, input, output, "SetSpeed 0", "Speed is changed to 0\n");
+
+
+
+	/* Переключаем передачу на заднюю, проверяем сообщение */
+	VerifyCommand(remoteControl, input, output, "SetGear -1", "Gear is shifted to -1\n");
+
+	/* Разгоняем машину на задней передаче, проверяем сообщение */
+	VerifyCommand(remoteControl, input, output, "SetSpeed 15", "Speed is changed to 15\n");
+
+
+	/* Проверяем состояние машины */
+	VerifyCommand(remoteControl, input, output, "Info", "Car info:\n\tEngine state: On\n\tDirection: Backward\n\tSpeed: 15\n\tGear: -1\n");
+
+
+	/* Останавливаем машину */
+	VerifyCommand(remoteControl, input, output, "SetSpeed 0", "Speed is changed to 0\n");
+
+	/* Переключаем передачу на нейтральную */
+	VerifyCommand(remoteControl, input, output, "SetGear 0", "Gear is shifted to 0\n");
 
 
 	/* Выключаем двигатель и проверяем сообщение */

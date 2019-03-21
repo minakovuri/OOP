@@ -117,6 +117,8 @@ bool CCar::SetSpeed(int speed)
 
 	m_speed = speed;
 
+	SetDirection();
+
 	return true;
 }
 
@@ -207,4 +209,23 @@ bool CCar::IsGearAllowed(Gear gear)
 	}
 
 	return true;
+}
+
+void CCar::SetDirection()
+{
+	if (m_speed == 0)
+	{
+		m_direction = DrivingDirection::NotMoving;
+	}
+	else
+	{
+		if (m_gear == Gear::Reverse)
+		{
+			m_direction = DrivingDirection::Backward;
+		}
+		else if (m_gear != Gear::Neutral)
+		{
+			m_direction = DrivingDirection::Forward;
+		}
+	}
 }

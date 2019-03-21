@@ -52,4 +52,5 @@ public:
 private:
 	bool IsSpeedAllowed(Speed speed);
 	bool IsGearAllowed(Gear gear);
+	void SetDirection();
 };

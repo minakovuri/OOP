@@ -165,3 +165,26 @@ TEST_CASE("Car engine stoping test")
 	car.SetSpeed(25);
 	CHECK(!car.TurnEngineOff());
 }
+
+TEST_CASE("Car direction switching test")
+{
+	CCar car;
+
+	car.TurnEngineOn();
+
+	/* При переключении на заднюю передачу, но без разгона, машина остается в стоячем положении */
+	car.SetGear(-1);
+	CHECK(car.GetDirection() == "Not moving");
+
+	/* При развитии скорости на задней передаче машины едет назад*/
+	car.SetSpeed(20);
+	CHECK(car.GetDirection() == "Backward");
+
+	/* Переключаемся на первую передачу */
+	car.SetSpeed(0);
+	car.SetGear(1);
+
+	/* При разгоне  машина едет вперед */
+	car.SetSpeed(30);
+	CHECK(car.GetDirection() == "Forward");
+}
