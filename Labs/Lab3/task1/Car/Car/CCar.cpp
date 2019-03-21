@@ -105,11 +105,6 @@ bool CCar::SetSpeed(int speed)
 		return false;
 	}
 
-	if ((m_gear == Gear::Neutral) && (speed > m_speed))
-	{
-		return false;
-	}
-
 	if (!IsSpeedAllowed(speed))
 	{
 		return false;
@@ -158,6 +153,11 @@ int CCar::GetGear() const
 
 bool CCar::IsSpeedAllowed(Speed speed)
 {
+	if ((m_gear == Gear::Neutral) && (speed > m_speed))
+	{
+		return false;
+	}
+
 	auto gearRange = SPEED_RANGES.find(m_gear);
 	Speed minGearSpeed = gearRange->second.first;
 	Speed maxGearSpeed = gearRange->second.second;
