@@ -75,12 +75,8 @@ void CRemoteControl::HandleComand()
 {
 	using namespace std;
 
-	string comand;
-	getline(m_input, comand);
-	istringstream stream(comand);
-
 	string action;
-	stream >> action;
+	m_input >> action;
 
 	if (action == "Info")
 	{
@@ -97,18 +93,22 @@ void CRemoteControl::HandleComand()
 	else if (action == "SetGear")
 	{
 		int gear;
-		stream >> gear;
+		m_input >> gear;
 
 		CRemoteControl::SetGear(gear);
 	}
 	else if (action == "SetSpeed")
 	{
 		int speed;
-		stream >> speed;
+		m_input >> speed;
 
 		CRemoteControl::SetSpeed(speed);
 	}
-	else
+	else if (action == "")
+	{
+		m_output << "Goodbye!\n";
+	}
+	else 
 	{
 		m_output << "Unknown command\n";
 	}
