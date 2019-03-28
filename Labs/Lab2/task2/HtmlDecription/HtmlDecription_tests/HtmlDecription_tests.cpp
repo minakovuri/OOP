@@ -1,12 +1,11 @@
-#define CATCH_CONFIG_MAIN
+﻿#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "Decryptor.h"
 
-TEST_CASE("Test HtmlEncode() function")
+TEST_CASE()
 {
-	{
-		const std::string html = "<div>\n</div>";
-		const std::string encodeHtml = "&lt;div&gt;\n&lt;/div&gt;";
-		REQUIRE(HtmlEncode(html) == encodeHtml);
-	}
+	std::string html = "<div></div>";
+	std::string encodeHtml = "&lt;div&gt;&lt;/div&gt;";
+
+	CHECK(HtmlEncode(html) == encodeHtml);
 }

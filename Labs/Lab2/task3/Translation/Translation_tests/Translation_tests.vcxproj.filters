@@ -18,10 +18,10 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Translation\Dictionary.h">
+    <ClInclude Include="..\Translation\Translator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Translation\Translator.h">
+    <ClInclude Include="..\Translation\Dictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

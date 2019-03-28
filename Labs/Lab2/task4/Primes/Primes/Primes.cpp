@@ -5,7 +5,7 @@
 
 int main(int argc, char* argv[])
 {
-	std::optional<unsigned long> uppedBound = GetUpperBound(argc, argv);
+	std::optional<int> uppedBound = GetUpperBound(argc, argv);
 
 	if (!uppedBound)
 	{

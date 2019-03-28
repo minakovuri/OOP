@@ -8,7 +8,6 @@ public:
 	CShape(const uint32_t outlineColor);
 	virtual ~CShape();
 
-	void SetOutlineColor(uint32_t) override;
 	uint32_t GetOutlineColor() const override;
 
 private:

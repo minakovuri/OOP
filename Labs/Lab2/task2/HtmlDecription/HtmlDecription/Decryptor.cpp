@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Decryptor.h"
 
-std::string HtmlEncode(std::string const& text)
+std::string HtmlEncode(const std::string& text)
 {
 	std::string encodingText;
 	encodingText.reserve(text.size());

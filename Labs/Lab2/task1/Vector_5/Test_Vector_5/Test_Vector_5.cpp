@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "ProcessVector.h"
 
-TEST_CASE("Run vector through ProcessVector() and check resuls")
+TEST_CASE("Run vector through ProcessVector() and check results")
 {
 	{
 		VectorOfDoubles numbers = { 2, -1, 5 };
@@ -20,5 +20,14 @@ TEST_CASE("Run vector through ProcessVector() and check resuls")
 
 		REQUIRE(numbers.size() == 4);
 		REQUIRE(numbers != required);
+	}
+
+	{
+		VectorOfDoubles numbers;
+		ProcessVector(numbers);
+		VectorOfDoubles required;
+
+		REQUIRE(numbers.size() == 0);
+		REQUIRE(numbers == required);
 	}
 }

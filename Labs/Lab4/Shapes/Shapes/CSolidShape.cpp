@@ -12,12 +12,12 @@ CSolidShape::~CSolidShape()
 {
 }
 
+uint32_t CSolidShape::GetOutlineColor() const
+{
+	return CShape::GetOutlineColor();
+}
+
 uint32_t CSolidShape::GetFillColor() const
 {
 	return m_fillColor;
-}
-
-void CSolidShape::SetFillColor(uint32_t fillColor)
-{
-	m_fillColor = fillColor;
 }

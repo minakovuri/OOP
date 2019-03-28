@@ -14,18 +14,18 @@ CTriangle::~CTriangle()
 
 double CTriangle::GetPerimeter() const
 {
-	return std::hypotf(m_vertices[0].GetCoordX() - m_vertices[1].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[1].GetCoordY())
-		+ std::hypotf(m_vertices[1].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[1].GetCoordY() - m_vertices[2].GetCoordY())
-		+ std::hypotf(m_vertices[0].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[2].GetCoordY());
+	return std::hypot(m_vertices[0].GetCoordX() - m_vertices[1].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[1].GetCoordY())
+		+ std::hypot(m_vertices[1].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[1].GetCoordY() - m_vertices[2].GetCoordY())
+		+ std::hypot(m_vertices[0].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[2].GetCoordY());
 }
 
 double CTriangle::GetArea() const
 {
 	auto p = GetPerimeter() / 2;
 
-	auto a = std::hypotf(m_vertices[0].GetCoordX() - m_vertices[1].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[1].GetCoordY());
-	auto b = std::hypotf(m_vertices[1].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[1].GetCoordY() - m_vertices[2].GetCoordY());
-	auto c = std::hypotf(m_vertices[0].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[2].GetCoordY());
+	auto a = std::hypot(m_vertices[0].GetCoordX() - m_vertices[1].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[1].GetCoordY());
+	auto b = std::hypot(m_vertices[1].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[1].GetCoordY() - m_vertices[2].GetCoordY());
+	auto c = std::hypot(m_vertices[0].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[2].GetCoordY());
 
 	return sqrt(p * (p - a) * (p - b) * (p - c));
 }

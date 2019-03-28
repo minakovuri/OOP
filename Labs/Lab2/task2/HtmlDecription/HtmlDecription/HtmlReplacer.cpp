@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "HtmlReplacer.h"
 
-std::optional<std::string> GetHtmlEntity(const char symbol)
+std::optional<std::string> GetHtmlEntity(char symbol)
 {
 	switch (symbol)
 	{
@@ -20,7 +20,7 @@ std::optional<std::string> GetHtmlEntity(const char symbol)
 	}
 }
 
-std::optional<char> GetSpecialSymbol(std::string const& htmlEntity)
+std::optional<char> GetSpecialSymbol(std::string& htmlEntity)
 {
 	if (htmlEntity == "&quot;")
 	{

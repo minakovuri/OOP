@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PrimesGenerator.h"
 
-PrimeSet GeneratePrimeNumbersSet(const unsigned long upperBound)
+PrimeSet GeneratePrimeNumbersSet(const unsigned int upperBound)
 {
 	PrimeSet primeSet;
 
@@ -14,20 +14,18 @@ PrimeSet GeneratePrimeNumbersSet(const unsigned long upperBound)
 
 	primes[0] = primes[1] = false;
 
-	for (unsigned i = 2; i * i <= upperBound; ++i)
+	for (unsigned int i = 2; i * i <= upperBound; ++i)
 	{
 		if (primes[i])
 		{
-			for (unsigned j = i * i; j <= upperBound; j += 2 * i)
+			for (unsigned int j = i * i; j <= upperBound; j += 2 * i)
 			{
 				primes[j] = false;
 			}
 		}
 	}
 
-	primeSet.insert(2);
-
-	for (unsigned i = 3; i <= upperBound; i += 2)
+	for (unsigned i = 1; i <= upperBound; i += 2)
 	{
 		if (primes[i])
 		{

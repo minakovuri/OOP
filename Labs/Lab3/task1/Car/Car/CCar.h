@@ -37,19 +37,17 @@ public:
 	bool SetGear(int gear);
 	bool SetSpeed(int speed);
 
-private:
-	EngineState m_engineState;
-	DrivingDirection m_direction;
-	Speed m_speed;
-	Gear m_gear;
-
-public:
 	std::string GetEngineState() const;
 	std::string GetDirection() const;
 	int GetSpeed() const;
 	int GetGear() const;
 
 private:
+	EngineState m_engineState;
+	DrivingDirection m_direction;
+	Speed m_speed;
+	Gear m_gear;
+
 	bool IsSpeedAllowed(Speed speed);
 	bool IsGearAllowed(Gear gear);
 	void SetDirection();

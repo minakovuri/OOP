@@ -11,6 +11,7 @@ int main()
 	while (!std::cin.eof() && !std::cin.fail())
 	{
 		std::cout << "> ";
+
 		remoteControl.HandleComand();
 	}
 

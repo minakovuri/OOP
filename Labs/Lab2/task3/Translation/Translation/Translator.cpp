@@ -29,5 +29,8 @@ void AddTranslation(const std::string& engWord, const std::string& rusWord, Dict
 {
 	using namespace std;
 
-	dictionary.insert(pair<string, string>(engWord, rusWord));
+	std::string engWordCopy = engWord;
+	std::transform(engWordCopy.begin(), engWordCopy.end(), engWordCopy.begin(), ::tolower);
+
+	dictionary.insert(pair<string, string>(engWordCopy, rusWord));
 }
