@@ -6,6 +6,14 @@ CTriangle::CTriangle(const CPoint& vertex1, const CPoint& vertex2, const CPoint&
 	: CSolidShape(outlineColor, fillColor)
 	, m_vertices({ vertex1, vertex2, vertex3 })
 {
+	auto a = std::hypot(m_vertices[0].GetCoordX() - m_vertices[1].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[1].GetCoordY());
+	auto b = std::hypot(m_vertices[1].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[1].GetCoordY() - m_vertices[2].GetCoordY());
+	auto c = std::hypot(m_vertices[0].GetCoordX() - m_vertices[2].GetCoordX(), m_vertices[0].GetCoordY() - m_vertices[2].GetCoordY());
+
+	if (((a + b) <= c) || ((a + c) <= b) || ((b + c) <= a))
+	{
+		throw std::invalid_argument("This triangle is degenerate");
+	}
 }
 
 CTriangle::~CTriangle()

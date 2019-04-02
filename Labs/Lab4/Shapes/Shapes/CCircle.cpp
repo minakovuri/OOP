@@ -6,6 +6,10 @@ CCircle::CCircle(const CPoint& center, const double radius, const uint32_t outli
 	, m_center(center)
 	, m_radius(radius)
 {
+	if (radius <= 0)
+	{
+		throw std::invalid_argument("Circle must have radius larger than 0");
+	}
 }
 
 CCircle::~CCircle()
@@ -14,14 +18,12 @@ CCircle::~CCircle()
 
 double CCircle::GetArea() const
 {
-	// TODO: Add your implementation code here.
-	return 0.0;
+	return M_PI * m_radius * m_radius;
 }
 
 double CCircle::GetPerimeter() const
 {
-	// TODO: Add your implementation code here.
-	return 0.0;
+	return 2 * M_PI * m_radius;
 }
 
 std::string CCircle::ToString() const

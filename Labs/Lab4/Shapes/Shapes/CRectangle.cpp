@@ -6,28 +6,19 @@ CRectangle::CRectangle(const CPoint& leftTop, const CPoint& rightBottom, const u
 	, m_leftTop(leftTop)
 	, m_rightBottom(rightBottom)
 {
+	if (leftTop.GetCoordX() >= rightBottom.GetCoordX())
+	{
+		throw std::invalid_argument("Rectangle must have left vertex less than right by OX");
+	}
+
+	if (leftTop.GetCoordY() <= rightBottom.GetCoordY())
+	{
+		throw std::invalid_argument("Rectangle must have left vertex larger than right by OY");
+	}
 }
 
 CRectangle::~CRectangle()
 {
-}
-
-double CRectangle::GetArea() const
-{
-	// TODO: Add your implementation code here.
-	return 0.0;
-}
-
-double CRectangle::GetPerimeter() const
-{
-	// TODO: Add your implementation code here.
-	return 0.0;
-}
-
-std::string CRectangle::ToString() const
-{
-	// TODO: Add your implementation code here.
-	return std::string();
 }
 
 CPoint CRectangle::GetLeftTop() const
@@ -42,12 +33,26 @@ CPoint CRectangle::GetRightBottom() const
 
 double CRectangle::GetWidth() const
 {
-	// TODO: Add your implementation code here.
-	return 0.0;
+	return m_rightBottom.GetCoordX() - m_leftTop.GetCoordX();
 }
 
 double CRectangle::GetHeight() const
 {
+	return m_leftTop.GetCoordY() - m_rightBottom.GetCoordY();
+}
+
+double CRectangle::GetArea() const
+{
+	return GetWidth() * GetHeight();
+}
+
+double CRectangle::GetPerimeter() const
+{
+	return 2 * (GetWidth() + GetHeight());
+}
+
+std::string CRectangle::ToString() const
+{
 	// TODO: Add your implementation code here.
-	return 0.0;
+	return std::string();
 }
