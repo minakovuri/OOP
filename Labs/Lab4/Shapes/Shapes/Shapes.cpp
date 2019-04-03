@@ -1,6 +1,9 @@
 #include "pch.h"
+#include "CControlMenu.h"
 
 int main()
 {
-	return 0;
+	CÑontrolMenu menu(std::cin, std::cout);
+
+	menu.HandleCommands();
 }
