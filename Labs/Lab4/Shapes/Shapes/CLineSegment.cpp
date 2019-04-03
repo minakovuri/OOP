@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "CLineSegment.h"
-#include <sstream>
-#include <iomanip>
 
 CLineSegment::CLineSegment(const CPoint& start, const CPoint& end, const uint32_t outlineColor)
 	: CShape(outlineColor)

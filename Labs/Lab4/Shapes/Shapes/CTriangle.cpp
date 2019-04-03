@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CTriangle.h"
-#include <math.h>
 
 CTriangle::CTriangle(const CPoint& vertex1, const CPoint& vertex2, const CPoint& vertex3, const uint32_t outlineColor, const uint32_t fillColor)
 	: CSolidShape(outlineColor, fillColor)

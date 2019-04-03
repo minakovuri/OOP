@@ -18,66 +18,36 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ISolidShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CSolidShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CLineSegment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CRectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CCircle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shapes.cpp">
+    <ClCompile Include="Factory_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPoint.cpp">
+    <ClCompile Include="..\Shapes\CCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CShape.cpp">
+    <ClCompile Include="..\Shapes\CFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CSolidShape.cpp">
+    <ClCompile Include="..\Shapes\CRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CLineSegment.cpp">
+    <ClCompile Include="..\Shapes\CShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CTriangle.cpp">
+    <ClCompile Include="..\Shapes\CSolidShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CRectangle.cpp">
+    <ClCompile Include="..\Shapes\CTriangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CCircle.cpp">
+    <ClCompile Include="..\Shapes\CLineSegment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CFactory.cpp">
+    <ClCompile Include="..\Shapes\CPoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
