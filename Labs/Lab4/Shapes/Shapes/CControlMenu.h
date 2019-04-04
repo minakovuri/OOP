@@ -3,11 +3,12 @@
 #include "CShape.h"
 
 using VectorOfStrings = std::vector<std::string>;
+using ShapePtr = std::unique_ptr<CShape>;
 
 class CÑontrolMenu
 {
 public:
-	CÑontrolMenu(std::istream & input, std::ostream & output);
+	CÑontrolMenu(std::istream & input, std::ostream & output, std::ostream & errstr);
 	~CÑontrolMenu();
 
 	void HandleCommands();
@@ -21,9 +22,14 @@ private:
 	void CreateCircle(const VectorOfStrings& commands);
 
 	void GetShapesInfo();
+	void DeleteShapes();
+
+	CShape* GetShapeWithMaxArea();
+	CShape* GetShapeWithMinPerimeter();
 
 	std::istream& m_input;
 	std::ostream& m_output;
+	std::ostream& m_errstr;
 
-	std::vector<std::unique_ptr<CShape>> m_shapes;
+	std::vector<ShapePtr> m_shapes;
 };

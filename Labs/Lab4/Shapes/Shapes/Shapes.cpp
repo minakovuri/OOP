@@ -3,7 +3,7 @@
 
 int main()
 {
-	CÑontrolMenu menu(std::cin, std::cout);
+	CÑontrolMenu menu(std::cin, std::cout, std::cerr);
 
 	menu.HandleCommands();
 }

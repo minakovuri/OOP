@@ -27,16 +27,17 @@ std::string CLineSegment::ToString() const
 	std::stringstream buffer;
 	buffer << std::fixed << std::setprecision(2);
 
-	buffer << "Line segment:" << '\n';
-	buffer << '\t' << "Area: " << GetArea() << '\n';
-	buffer << '\t' << "Perimeter: " << GetPerimeter() << '\n';
-	buffer << '\t' << "Outline color: " << std::hex << GetOutlineColor() << std::dec << '\n';
+	buffer << "Line segment:" << std::endl;
 
 	CPoint startPoint = GetStartPoint();
-	buffer << '\t' << "Start point: " << startPoint.GetCoordX() << ' ' << startPoint.GetCoordY() << '\n';
-
 	CPoint endPoint = GetEndPoint();
-	buffer << '\t' << "End point: " << endPoint.GetCoordX() << ' ' << endPoint.GetCoordY() << '\n';
+
+	buffer << "  Start point: " << startPoint.GetCoordX() << ' ' << startPoint.GetCoordY() << std::endl;
+	buffer << "  End point: " << endPoint.GetCoordX() << ' ' << endPoint.GetCoordY() << std::endl;
+
+	buffer << "  Area: " << GetArea() << std::endl;
+	buffer << "  Perimeter: " << GetPerimeter() << std::endl;
+	buffer << "  Outline color: " << std::hex << std::setw(6) << std::setfill('0') << GetOutlineColor() << std::dec << std::endl;
 
 	return buffer.str();
 }

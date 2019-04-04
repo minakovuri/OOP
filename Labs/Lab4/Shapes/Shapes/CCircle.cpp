@@ -28,8 +28,23 @@ double CCircle::GetPerimeter() const
 
 std::string CCircle::ToString() const
 {
-	// TODO: Add your implementation code here.
-	return std::string();
+	std::stringstream buffer;
+	buffer << std::fixed << std::setprecision(2);
+
+	buffer << "Ñircle:" << std::endl;
+
+	CPoint center = GetCenter();
+
+	buffer << "  Center: " << center.GetCoordX() << ' ' << center.GetCoordY() << std::endl;
+	buffer << "  Radius: " << GetRadius() << std::endl;
+
+	buffer << "  Area: " << GetArea() << std::endl;
+	buffer << "  Perimeter: " << GetPerimeter() << std::endl;
+
+	buffer << "  Outline color: " << std::hex << std::setw(6) << std::setfill('0') << GetOutlineColor() << std::dec << std::endl;
+	buffer << "  Fill color: " << std::hex << std::setw(6) << std::setfill('0') << GetFillColor() << std::dec << std::endl;
+
+	return buffer.str();
 }
 
 CPoint CCircle::GetCenter() const

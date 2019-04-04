@@ -53,6 +53,25 @@ double CRectangle::GetPerimeter() const
 
 std::string CRectangle::ToString() const
 {
-	// TODO: Add your implementation code here.
-	return std::string();
+	std::stringstream buffer;
+	buffer << std::fixed << std::setprecision(2);
+
+	buffer << "Rectangle:" << std::endl;
+
+	CPoint leftTop = GetLeftTop();
+	CPoint rightBottom = GetRightBottom();
+
+	buffer << "  Left top: " << leftTop.GetCoordX() << ' ' << leftTop.GetCoordY() << std::endl;
+	buffer << "  Right bottom: " << rightBottom.GetCoordX() << ' ' << rightBottom.GetCoordY() << std::endl;
+
+	buffer << "  Width: " << GetWidth() << std::endl;
+	buffer << "  Height: " << GetHeight() << std::endl;
+
+	buffer << "  Area: " << GetArea() << std::endl;
+	buffer << "  Perimeter: " << GetPerimeter() << std::endl;
+
+	buffer << "  Outline color: " << std::hex << std::setw(6) << std::setfill('0') << GetOutlineColor() << std::dec << std::endl;
+	buffer << "  Fill color: " << std::hex << std::setw(6) << std::setfill('0') << GetFillColor() << std::dec << std::endl;
+
+	return buffer.str();
 }

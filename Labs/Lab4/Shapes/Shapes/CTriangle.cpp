@@ -39,8 +39,25 @@ double CTriangle::GetArea() const
 
 std::string CTriangle::ToString() const
 {
-	// TODO: Add your implementation code here.
-	return std::string();
+	std::stringstream buffer;
+	buffer << std::fixed << std::setprecision(2);
+
+	buffer << "Triangle:" << std::endl;
+
+	CPoint vertex1 = GetVertex1();
+	CPoint vertex2 = GetVertex2();
+	CPoint vertex3 = GetVertex3();
+
+	buffer << "  Vertex 1: " << vertex1.GetCoordX() << ' ' << vertex1.GetCoordY() << std::endl;
+	buffer << "  Vertex 2: " << vertex2.GetCoordX() << ' ' << vertex2.GetCoordY() << std::endl;
+	buffer << "  Vertex 3: " << vertex3.GetCoordX() << ' ' << vertex3.GetCoordY() << std::endl;
+
+	buffer << "  Area: " << GetArea() << std::endl;
+	buffer << "  Perimeter: " << GetPerimeter() << std::endl;
+	buffer << "  Outline color: " << std::hex << std::setw(6) << std::setfill('0') << GetOutlineColor() << std::dec << std::endl;
+	buffer << "  Fill color: " << std::hex << std::setw(6) << std::setfill('0')  << GetFillColor() << std::dec << std::endl;
+
+	return buffer.str();
 }
 
 CPoint CTriangle::GetVertex1() const
