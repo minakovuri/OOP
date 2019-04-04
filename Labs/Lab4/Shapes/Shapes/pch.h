@@ -1,13 +1,13 @@
 #ifndef PCH_H
 #define PCH_H
 
-#include <iostream>
+#include <cctype>
 #include <iomanip>
+#include <iostream>
 #include <math.h>
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include <boost/algorithm/string.hpp>
+#include <algorithm>
 
 #endif //PCH_H

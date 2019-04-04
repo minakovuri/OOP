@@ -41,13 +41,21 @@ void CÑontrolMenu::HandleCommands()
 	ExecuteCommand("INFO");
 }
 
-void CÑontrolMenu::ExecuteCommand(const std::string& commandLine)
+void CÑontrolMenu::ExecuteCommand(const std::string& line)
 {
-	auto command(commandLine);
-	boost::to_upper(command);
+	auto commandLine(line);
+	std::transform(commandLine.begin(), commandLine.end(), commandLine.begin(), [](unsigned char ch) { return std::toupper(ch); });
 
-	std::vector<std::string> commands;
-	boost::split(commands, command, boost::is_any_of(" \t,"));
+	VectorOfStrings commands;
+
+	std::istringstream ss(commandLine);
+
+	std::string command;
+
+	while (ss >> command)
+	{
+		commands.push_back(command);
+	}
 
 	if (commands[0] == LINE_SEGMENT_COMMAND_BEGINNING)
 	{
