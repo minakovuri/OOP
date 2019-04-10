@@ -121,3 +121,42 @@ bool CVector3D::operator!=(CVector3D const& other) const
 
 	return true;
 }
+
+CVector3D Normalize(CVector3D const& vector)
+{
+	const auto vectorLength = vector.GetLength();
+
+	return CVector3D(vector.x / vectorLength, vector.y / vectorLength, vector.z / vectorLength);
+}
+
+CVector3D CrossProduct(CVector3D const& vector1, CVector3D const& vector2)
+{
+	return CVector3D(vector1.y * vector2.z - vector1.z * vector2.y, vector1.z * vector2.x - vector1.x * vector2.z, vector1.x * vector2.y - vector1.y * vector2.x);
+}
+
+double DotProduct(CVector3D const& vector1, CVector3D const& vector2)
+{
+	return vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z;
+}
+
+std::ostream& operator<<(std::ostream& stream, CVector3D const& vector)
+{
+	stream << vector.x << ' ' << vector.y << ' ' << vector.z << '\n';
+	return stream;
+}
+
+std::istream& operator>>(std::istream& stream, CVector3D & vector)
+{
+	double x, y, z;
+
+	if ((stream >> x) && (stream >> y) && (stream >> z))
+	{
+		vector = CVector3D(x, y, z);
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit | stream.rdstate());
+	}
+
+	return stream;
+}

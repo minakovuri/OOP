@@ -31,3 +31,13 @@ public:
 };
 
 CVector3D const operator*(double scalar, CVector3D const& vector);
+
+CVector3D Normalize(CVector3D const& vector);
+
+CVector3D CrossProduct(CVector3D const& vector1, CVector3D const& vector2);
+
+double DotProduct(CVector3D const& vector1, CVector3D const& vector2);
+
+std::ostream& operator<<(std::ostream& stream, CVector3D const& vector);
+
+std::istream& operator>>(std::istream& stream, CVector3D & vector);

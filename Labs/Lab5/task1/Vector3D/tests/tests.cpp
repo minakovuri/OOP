@@ -174,3 +174,66 @@ TEST_CASE("Checking the vectors '!=' operator")
 	CHECK(vector1 != vector2);
 	CHECK_FALSE(vector1 != vector3);
 }
+
+TEST_CASE("Check vector normalization")
+{
+	CVector3D vector(10, -4, 8);
+
+	const auto vectorLentgh = sqrt(std::pow(10.0, 2.0) + std::pow(-4.0, 2.0) + std::pow(8.0, 2.0));
+
+	CVector3D normVector = Normalize(vector);
+
+	CHECK(IsEqual(normVector.x, 10 / vectorLentgh));
+	CHECK(IsEqual(normVector.y, -4 / vectorLentgh));
+	CHECK(IsEqual(normVector.z, 8 / vectorLentgh));
+}
+
+TEST_CASE("Check cross product of vectors")
+{
+	CVector3D vector1(1, 2, 3);
+	CVector3D vector2(4, 5, 6);
+
+	CVector3D vector3 = CrossProduct(vector1, vector2);
+
+	CHECK(IsEqual(vector3.x, -3));
+	CHECK(IsEqual(vector3.y, 6));
+	CHECK(IsEqual(vector3.z, -3));
+}
+
+TEST_CASE("Check dot product of vectors")
+{
+	CVector3D vector1(1, 2, 3);
+	CVector3D vector2(4, 5, 6);
+
+	const auto scalar = DotProduct(vector1, vector2);
+
+	CHECK(scalar == 32);
+}
+
+TEST_CASE("Test the '<<' operator")
+{
+	std::stringstream output;
+
+	CVector3D vector(12.56, -4.12, 8.09);
+
+	output << vector;
+
+	CHECK(output.str() == "12.56 -4.12 8.09\n");
+}
+
+TEST_CASE("Test the '>>' operator")
+{
+	std::stringstream input;
+
+	input << "12.56 -4.12 8.09\n";
+
+	double x, y, z;
+
+	input >> x >> y >> z;
+
+	CVector3D vector(x, y, z);
+
+	CHECK(IsEqual(vector.x, 12.56));
+	CHECK(IsEqual(vector.y, -4.12));
+	CHECK(IsEqual(vector.z, 8.09));
+}
