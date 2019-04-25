@@ -6,16 +6,11 @@
 #include "ValidationTools.h"
 
 CHttpUrl::CHttpUrl(std::string const& url)
-try
 {
 	ParseUrl(url);
 }
-catch (const CUrlParsingError&)
-{
-}
 
 CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol)
-try
 	: m_protocol(protocol)
 {
 	ValidateDomain(domain);
@@ -25,13 +20,8 @@ try
 	m_document = document;
 	m_port = (protocol == Protocol::HTTP) ? DEFAULT_HTTP_PORT : DEFAULT_HTTPS_PORT;
 }
-catch (const std::invalid_argument&)
-{
-	throw;
-}
 
 CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Protocol protocol, unsigned short port) 
-try
 	: m_protocol(protocol)
 	, m_port(port)
 {
@@ -40,10 +30,6 @@ try
 
 	m_domain = domain;
 	m_document = document;
-}
-catch (const std::invalid_argument&)
-{
-	throw;
 }
 
 CHttpUrl::~CHttpUrl()
@@ -92,7 +78,29 @@ void CHttpUrl::ParseUrl(std::string const& url)
 
 std::string CHttpUrl::GetURL() const
 {
-	return "";
+	std::string url;
+
+	if (m_protocol == Protocol::HTTP)
+	{
+		url += "http";
+	}
+	else
+	{
+		url += "https";
+	}
+
+	url += "://";
+
+	url += m_domain;
+
+	if ((m_port != DEFAULT_HTTP_PORT) && (m_port != DEFAULT_HTTPS_PORT))
+	{
+		url += ':' + std::to_string(m_port);
+	}
+
+	url += m_document;
+
+	return url;
 }
 
 std::string CHttpUrl::GetDomain() const

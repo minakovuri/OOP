@@ -120,6 +120,9 @@ TEST_CASE("Check vector division by scalar")
 
 	CVector3D vector2 = vector1 / 2;
 
+	CVector3D vector3;
+	CHECK_THROWS_AS(vector3 = vector1 / 0.0, std::logic_error);
+
 	CHECK(IsEqual(vector2.x, 5));
 	CHECK(IsEqual(vector2.y, -2));
 	CHECK(IsEqual(vector2.z, 4));
@@ -141,8 +144,11 @@ TEST_CASE("Checking the vectors '/=' operator")
 {
 	CVector3D vector1(10, -4, 8);
 	CVector3D vector2(2, 2, 2);
+	CVector3D vector3(0, 1, 2);
 
 	vector1 /= vector2;
+
+	CHECK_THROWS_AS(vector2 /= vector3, std::logic_error);
 
 	CHECK(IsEqual(vector1.x, 5));
 	CHECK(IsEqual(vector1.y, -2));
@@ -186,6 +192,16 @@ TEST_CASE("Check vector normalization")
 	CHECK(IsEqual(normVector.x, 10 / vectorLentgh));
 	CHECK(IsEqual(normVector.y, -4 / vectorLentgh));
 	CHECK(IsEqual(normVector.z, 8 / vectorLentgh));
+}
+
+TEST_CASE("Check vector with length 0.0 normalization")
+{
+	CVector3D vector(0, 0, 0);
+
+	CVector3D normVector;
+
+	CHECK_THROWS_AS(normVector = Normalize(vector), std::logic_error);
+
 }
 
 TEST_CASE("Check cross product of vectors")

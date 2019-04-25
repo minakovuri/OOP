@@ -12,7 +12,7 @@ const uint32_t RED_COLOR = 0xff0000;
 
 bool IsEqual(const double a, const double b)
 {
-	return std::abs(a - b) < DBL_EPSILON;
+	return std::abs(a - b) < FLT_EPSILON;
 }
 
 TEST_CASE("Create point and check it coordinates")

@@ -61,10 +61,19 @@ std::string ParseDomain(std::string const& url)
 
 unsigned short ParsePort(std::string const& url)
 {
-	auto const start = url.find_last_of(':');
-	auto const end = url.find('/', start + 1);
+	auto copyUrl(url);
 
-	auto port = std::stoi(url.substr(start + 1, (end - start)));
+	auto const protocolDelimeter = copyUrl.find("://");
+
+	if (protocolDelimeter != std::string::npos)
+	{
+		copyUrl.erase(0, protocolDelimeter + 3);
+	}
+
+	auto const start = copyUrl.find_last_of(':');
+	auto const end = copyUrl.find('/', start + 1);
+
+	auto port = std::stoi(copyUrl.substr(start + 1, (end - start - 1)));
 
 	if ((port < 0) || (port > USHRT_MAX))
 	{

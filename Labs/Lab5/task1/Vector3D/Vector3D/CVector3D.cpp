@@ -75,6 +75,11 @@ CVector3D const operator*(double scalar, CVector3D const& vector)
 
 CVector3D const CVector3D::operator/(double scalar) const
 {
+	if (scalar == 0)
+	{
+		throw std::logic_error("Scalar must be not equal 0.0");
+	}
+
 	return CVector3D(x / scalar, y / scalar, z / scalar);
 }
 
@@ -89,6 +94,11 @@ CVector3D CVector3D::operator*=(CVector3D const& vector2)
 
 CVector3D CVector3D::operator/=(CVector3D const& vector2)
 {
+	if ((vector2.x == 0) || (vector2.y == 0) || (vector2.z == 0))
+	{
+		throw std::logic_error("Vector coordinates mustn't be equal 0.0");
+	}
+
 	x /= vector2.x;
 	y /= vector2.y;
 	z /= vector2.z;
@@ -125,6 +135,11 @@ bool CVector3D::operator!=(CVector3D const& other) const
 CVector3D Normalize(CVector3D const& vector)
 {
 	const auto vectorLength = vector.GetLength();
+
+	if (vectorLength == 0)
+	{
+		throw std::logic_error("Vector length must be not equal 0.0");
+	}
 
 	return CVector3D(vector.x / vectorLength, vector.y / vectorLength, vector.z / vectorLength);
 }
