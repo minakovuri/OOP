@@ -51,7 +51,7 @@ TEST_CASE("Create CHttpUrl instance with valid url, includes domain and document
 	CHECK(httpUrl.GetPort() == DEFAULT_HTTP_PORT);
 	CHECK(httpUrl.GetDocument() == "/index.html");
 
-	//CHECK(httpUrl.GetURL() == "http://my.ru/index.html");
+	CHECK(httpUrl.GetURL() == "http://my.ru/index.html");
 }
 
 TEST_CASE("Create CHttpUrl instance with valid full url as constructor parameters")
@@ -63,17 +63,22 @@ TEST_CASE("Create CHttpUrl instance with valid full url as constructor parameter
 	CHECK(httpUrl.GetPort() == 8081);
 	CHECK(httpUrl.GetDocument() == "/img/rectangle.png");
 
-	//CHECK(httpUrl.GetURL() == "https://my.ru:8081/img/rectangle.png");
+	CHECK(httpUrl.GetURL() == "https://my.ru:8081/img/rectangle.png");
 }
 
 TEST_CASE("Create CHttpUrl instance with valid url, includes protocol and domain as constructor parameters")
 {
-	CHttpUrl httpUrl("https://my.ru");
+	CHttpUrl httpUrl("https://my.ru:443");
 
 	CHECK(httpUrl.GetProtocol() == Protocol::HTTPS);
 	CHECK(httpUrl.GetDomain() == "my.ru");
 	CHECK(httpUrl.GetPort() == DEFAULT_HTTPS_PORT);
 	CHECK(httpUrl.GetDocument() == "/");
 
-	//CHECK(httpUrl.GetURL() == "https://my.ru/");
+	CHECK(httpUrl.GetURL() == "https://my.ru/");
+}
+
+TEST_CASE("Trying to create CHttpUrl with invalid url as parameter")
+{
+	CHECK_THROWS_AS(CHttpUrl("https:/mail.ru"), CUrlParsingError);
 }

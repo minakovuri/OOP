@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ValidationTools.h"
 
-bool IsCharAllowed(char const ch)
+bool IsCharAllowed(char ch)
 {
 	if (isdigit(ch) || isalpha(ch) || (ch == '-') || (ch == '.') || (ch == '_') || (ch == '~'))
 	{
@@ -13,7 +13,7 @@ bool IsCharAllowed(char const ch)
 
 void ValidateDomain(std::string const& domain)
 {
-	for (char const& ch : domain)
+	for (char ch : domain)
 	{
 		if (!IsCharAllowed(ch))
 		{

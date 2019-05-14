@@ -88,12 +88,28 @@ void CÑontrolMenu::ExecuteCommand(const std::string& line)
 	else if (commands[0] == SHOW_SHAPE_WITH_MAX_AREA_COMMAND)
 	{
 		auto shape = GetShapeWithMaxArea();
-		m_output << shape->ToString() << std::endl;
+		
+		if (shape == nullptr)
+		{
+			m_output << "You didn't add any shape" << std::endl;
+		}
+		else
+		{
+			m_output << shape->ToString() << std::endl;
+		}
 	}
 	else if (commands[0] == SHOW_SHAPE_WITH_MIN_PERIMETER_COMMAND)
 	{
 		auto shape = GetShapeWithMinPerimeter();
-		m_output << shape->ToString() << std::endl;
+
+		if (shape == nullptr)
+		{
+			m_output << "You didn't add any shape" << std::endl;
+		}
+		else
+		{
+			m_output << shape->ToString() << std::endl;
+		}
 	}
 	else
 	{
@@ -137,6 +153,11 @@ void CÑontrolMenu::DeleteShapes()
 
 CShape* CÑontrolMenu::GetShapeWithMaxArea()
 {
+	if (!m_shapes.size())
+	{
+		return nullptr;
+	}
+
 	auto result = m_shapes.begin();
 	double maxArea = result->get()->GetArea();
 
@@ -158,6 +179,11 @@ CShape* CÑontrolMenu::GetShapeWithMaxArea()
 
 CShape* CÑontrolMenu::GetShapeWithMinPerimeter()
 {
+	if (!m_shapes.size())
+	{
+		return nullptr;
+	}
+
 	auto result = m_shapes.begin();
 	double minPerimeter = result->get()->GetPerimeter();
 
