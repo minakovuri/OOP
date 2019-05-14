@@ -66,9 +66,9 @@ TEST_CASE("Find max element in integers array by FindMax function without third 
 
 TEST_CASE("Find min element in chars array by FindMax function")
 {
-	char maxCh = '#';
-	CHECK(FindMax({'a', 'b', 'c', 'e', 'd'}, maxCh, [](const auto& lhc, const auto& rhc) {
+	char minCh = '#';
+	CHECK(FindMax({'a', 'b', 'c', 'e', 'd'}, minCh, [](const auto& lhc, const auto& rhc) {
 		return (lhc > rhc);
 	}));
-	CHECK(maxCh == 'a');
+	CHECK(minCh == 'a');
 }
