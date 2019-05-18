@@ -61,6 +61,5 @@ TEST_CASE("Test copying array constructor")
 	CMyArray<float> copyArr(arr);
 
 	CHECK(copyArr.GetSize() == arr.GetSize());
-	// ????
-	CHECK(copyArr.GetCapacity() == arr.GetCapacity());
+	CHECK(copyArr.GetCapacity() == arr.GetSize());
 }
