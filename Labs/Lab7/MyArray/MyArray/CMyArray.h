@@ -1,9 +1,86 @@
 #pragma once
 
+#include "pch.h"
+
 template <typename T>
 class CMyArray
 {
 public:
+	template <typename T, bool isReversed>
+	class CArrayIterator : public std::iterator<std::input_iterator_tag, T>
+	{
+	public:
+		CArrayIterator()
+			: m_isReversed(isReversed)
+		{
+		}
+
+		CArrayIterator(T* elemPtr)
+			: m_isReversed(isReversed)
+			, m_elemPtr(elemPtr)
+		{
+		}
+
+		T& operator*() const
+		{
+			return *m_elemPtr;
+		}
+
+		T* operator->() const
+		{
+			return m_elemPtr;
+		}
+
+		CArrayIterator& operator++()
+		{
+			isReversed ? --m_elemPtr : ++m_elemPtr;
+
+			return *this;
+		}
+
+		CArrayIterator& operator--()
+		{
+			isReversed ? ++m_elemPtr : --m_elemPtr;
+
+			return *this;
+		}
+
+		CArrayIterator const operator++(int)
+		{
+			CArrayIterator tmpCopy(*this);
+			isReversed ? --m_elemPtr : ++m_elemPtr;
+
+			return tmpCopy;
+		}
+
+		CArrayIterator const operator--(int)
+		{
+			CArrayIterator tmpCopy(*this);
+			isReversed ? ++m_elemPtr : --m_elemPtr;
+
+			return tmpCopy;
+		}
+
+		bool operator==(const CArrayIterator& other) const
+		{
+			return (m_elemPtr == other.m_elemPtr) && (m_isReversed == other.m_isReversed);
+		}
+
+		bool operator!=(const CArrayIterator& other) const
+		{
+			return !(*this == other);
+		}
+
+	private:
+		T* m_elemPtr;
+		bool m_isReversed;
+	};
+
+	typedef CArrayIterator<T, false> iterator;
+	//typedef CArrayIterator<const T, false> const_iterator;
+	typedef CArrayIterator<T, true> reverse_iterator;
+	//typedef CArrayIterator<const T, true> const_reverse_iterator;
+
 	CMyArray() = default;
 
 	// конструктор копирования
@@ -21,9 +98,54 @@ public:
 			catch (const std::exception& e)
 			{
 				DeleteItems(m_begin, m_end);
-				throw;
+				throw e;
 			}
 		}
+	}
+
+	// конструктор перемещения
+	CMyArray(CMyArray&& other)
+		: m_begin(other.m_begin)
+		, m_end(other.m_end)
+		, m_endOfCapacity(other.m_endOfCapacity)
+	{
+		other.m_begin = nullptr;
+		other.m_end = nullptr;
+		other.m_endOfCapacity = nullptr;
+	}
+
+	// оператор присваивания
+	CMyArray& operator=(CMyArray const& other)
+	{
+		if (std::addressof(other) != this)
+		{
+			CMyArray tmpCopy(other);
+
+			std::swap(m_begin, tmpCopy.m_begin);
+			std::swap(m_end, tmpCopy.m_end);
+			std::swap(m_endOfCapacity, tmpCopy.m_endOfCapacity);
+		}
+
+		return *this;
+	}
+
+	// перемещающий оператор присваивания
+	CMyArray& operator=(CMyArray && other)
+	{
+		if (&other != this)
+		{
+			DeleteItems(m_begin, m_end);
+
+			m_begin = other.m_begin;
+			m_end = other.m_end;
+			m_endOfCapacity = other.m_endOfCapacity;
+
+			other.m_begin = nullptr;
+			other.m_end = nullptr;
+			other.m_endOfCapacity = nullptr;
+		}
+
+		return *this;
 	}
 
 	void Append(const T& value)
@@ -34,6 +156,7 @@ public:
 
 			auto newBegin = RawAlloc(newCapacity);
 			T* newEnd = newBegin;
+
 			try
 			{
 				CopyItems(m_begin, m_end, newBegin, newEnd);
@@ -44,8 +167,9 @@ public:
 			catch (const std::exception& e)
 			{
 				DeleteItems(newBegin, newEnd);
-				throw;
+				throw e;
 			}
+
 			DeleteItems(m_begin, m_end);
 
 			// Переключаемся на использование нового хранилища элементов
@@ -70,6 +194,49 @@ public:
 		return m_endOfCapacity - m_begin;
 	}
 
+	// оператор индексированного доступа для чтения
+	const T& operator[](size_t index) const
+	{
+		if (index >= GetSize())
+			throw std::out_of_range("requested index is out of range");
+
+		return *(m_begin + index);
+	}
+
+	// оператор индексированного доступа для записи
+	T& operator[](size_t index)
+	{
+		if (index >= GetSize())
+			throw std::out_of_range("requested index is out of range");
+
+		return *(m_begin + index);
+	}
+
+	void Resize(size_t newSize)
+	{
+		size_t oldSize = GetSize();
+
+		if (newSize < oldSize)
+		{
+			DestroyItems(m_begin + newSize, m_end);
+			m_end = m_begin + newSize;
+		}
+		else
+		{
+			for (size_t currSize = oldSize; currSize < newSize; currSize++)
+			{
+				try
+				{
+					Append(T());
+				}
+				catch (const std::exception& e)
+				{
+					throw e;
+				}
+			}
+		}
+	}
+
 	void Clear()
 	{
 		DeleteItems(m_begin, m_end);
@@ -78,6 +245,46 @@ public:
 		m_end = nullptr;
 		m_endOfCapacity = nullptr;
 	}
+
+	iterator begin()
+	{
+		return iterator(m_begin);
+	}
+	
+	/*const_iterator cbegin() const
+	{
+		return const_iterator(m_begin);
+	}*/
+
+	iterator end()
+	{
+		return iterator(m_end);
+	}
+
+	/*const_iterator cend() const
+	{
+		return const_iterator(m_end);
+	}*/
+
+	reverse_iterator rbegin()
+	{
+		return reverse_iterator(m_end - 1);
+	}
+
+	/*const_reverse_iterator rcbegin() const
+	{
+		return const_reverse_iterator(m_end - 1);
+	}*/
+
+	reverse_iterator rend()
+	{
+		return reverse_iterator(m_begin - 1);
+	}
+
+	/*const_reverse_iterator rcend() const
+	{
+		return const_reverse_iterator(m_begin - 1);
+	}*/
 
 	~CMyArray()
 	{
