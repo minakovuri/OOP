@@ -77,13 +77,10 @@ public:
 	};
 
 	typedef CArrayIterator<T, false> iterator;
-	//typedef CArrayIterator<const T, false> const_iterator;
 	typedef CArrayIterator<T, true> reverse_iterator;
-	//typedef CArrayIterator<const T, true> const_reverse_iterator;
 
 	CMyArray() = default;
 
-	// конструктор копирования
 	CMyArray(const CMyArray& arr)
 	{
 		const auto size = arr.GetSize();
@@ -103,7 +100,6 @@ public:
 		}
 	}
 
-	// конструктор перемещения
 	CMyArray(CMyArray&& other)
 		: m_begin(other.m_begin)
 		, m_end(other.m_end)
@@ -114,7 +110,6 @@ public:
 		other.m_endOfCapacity = nullptr;
 	}
 
-	// оператор присваивания
 	CMyArray& operator=(CMyArray const& other)
 	{
 		if (std::addressof(other) != this)
@@ -129,8 +124,7 @@ public:
 		return *this;
 	}
 
-	// перемещающий оператор присваивания
-	CMyArray& operator=(CMyArray && other)
+	CMyArray& operator=(CMyArray&& other)
 	{
 		if (&other != this)
 		{
@@ -150,7 +144,7 @@ public:
 
 	void Append(const T& value)
 	{
-		if (m_end == m_endOfCapacity) // no free space
+		if (m_end == m_endOfCapacity)
 		{
 			size_t newCapacity = std::max(size_t(1), GetCapacity() * 2);
 
@@ -160,7 +154,6 @@ public:
 			try
 			{
 				CopyItems(m_begin, m_end, newBegin, newEnd);
-				// Конструируем копию value по адресу newItemLocation
 				new (newEnd) T(value);
 				++newEnd;
 			}
@@ -172,12 +165,11 @@ public:
 
 			DeleteItems(m_begin, m_end);
 
-			// Переключаемся на использование нового хранилища элементов
 			m_begin = newBegin;
 			m_end = newEnd;
 			m_endOfCapacity = m_begin + newCapacity;
 		}
-		else // has free space
+		else
 		{
 			new (m_end) T(value);
 			++m_end;
@@ -194,7 +186,6 @@ public:
 		return m_endOfCapacity - m_begin;
 	}
 
-	// оператор индексированного доступа для чтения
 	const T& operator[](size_t index) const
 	{
 		if (index >= GetSize())
@@ -203,7 +194,6 @@ public:
 		return *(m_begin + index);
 	}
 
-	// оператор индексированного доступа для записи
 	T& operator[](size_t index)
 	{
 		if (index >= GetSize())
@@ -250,41 +240,21 @@ public:
 	{
 		return iterator(m_begin);
 	}
-	
-	/*const_iterator cbegin() const
-	{
-		return const_iterator(m_begin);
-	}*/
 
 	iterator end()
 	{
 		return iterator(m_end);
 	}
 
-	/*const_iterator cend() const
-	{
-		return const_iterator(m_end);
-	}*/
-
 	reverse_iterator rbegin()
 	{
 		return reverse_iterator(m_end - 1);
 	}
 
-	/*const_reverse_iterator rcbegin() const
-	{
-		return const_reverse_iterator(m_end - 1);
-	}*/
-
 	reverse_iterator rend()
 	{
 		return reverse_iterator(m_begin - 1);
 	}
-
-	/*const_reverse_iterator rcend() const
-	{
-		return const_reverse_iterator(m_begin - 1);
-	}*/
 
 	~CMyArray()
 	{
@@ -294,30 +264,23 @@ public:
 private:
 	static void DeleteItems(T* begin, T* end)
 	{
-		// Разрушаем старые элементы
 		DestroyItems(begin, end);
-		// Освобождаем область памяти для их хранения
 		RawDealloc(begin);
 	}
 
-	// Копирует элементы из текущего вектора в to, возвращает newEnd
 	static void CopyItems(const T* srcBegin, T* srcEnd, T* const dstBegin, T*& dstEnd)
 	{
 		for (dstEnd = dstBegin; srcBegin != srcEnd; ++srcBegin, ++dstEnd)
 		{
-			// Construct "T" at "dstEnd" as a copy of "*begin"
 			new (dstEnd) T(*srcBegin);
 		}
 	}
 
 	static void DestroyItems(T* from, T* to)
 	{
-		// dst - адрес объект, при конструирование которого было выброшено исключение
-		// to - первый скорнструированный объект
 		while (to != from)
 		{
 			--to;
-			// явно вызываем деструктор для шаблонного типа T
 			to->~T();
 		}
 	}

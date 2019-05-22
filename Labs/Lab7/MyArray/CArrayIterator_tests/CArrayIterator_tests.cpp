@@ -3,6 +3,11 @@
 
 #include "../MyArray/CMyArray.h"
 
+struct TestStruct
+{
+	int x;
+};
+
 TEST_CASE("Test * operator")
 {
 	CMyArray<float> arr;
@@ -16,7 +21,16 @@ TEST_CASE("Test * operator")
 	CHECK(*it == arr[0]);
 }
 
-// TODO: как протестировать оператор -> ?
+TEST_CASE("Test -> operator")
+{
+	CMyArray<TestStruct> arr;
+
+	arr.Append(TestStruct{ 1 });
+
+	auto it = arr.begin();
+
+	CHECK(it->x == 1);
+}
 
 TEST_CASE("Test increment operator")
 {
