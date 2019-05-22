@@ -80,161 +80,20 @@ public:
 	typedef CArrayIterator<T, true> reverse_iterator;
 
 	CMyArray() = default;
+	CMyArray(const CMyArray& arr);
+	CMyArray(CMyArray&& other);
 
-	CMyArray(const CMyArray& arr)
-	{
-		const auto size = arr.GetSize();
-		if (size != 0)
-		{
-			m_begin = RawAlloc(size);
-			try
-			{
-				CopyItems(arr.m_begin, arr.m_end, m_begin, m_end);
-				m_endOfCapacity = m_end;
-			}
-			catch (const std::exception& e)
-			{
-				DeleteItems(m_begin, m_end);
-				throw e;
-			}
-		}
-	}
+	CMyArray& operator=(CMyArray const& other);
+	CMyArray& operator=(CMyArray&& other);
 
-	CMyArray(CMyArray&& other)
-		: m_begin(other.m_begin)
-		, m_end(other.m_end)
-		, m_endOfCapacity(other.m_endOfCapacity)
-	{
-		other.m_begin = nullptr;
-		other.m_end = nullptr;
-		other.m_endOfCapacity = nullptr;
-	}
+	const T& operator[](size_t index) const;
+	T& operator[](size_t index);
 
-	CMyArray& operator=(CMyArray const& other)
-	{
-		if (std::addressof(other) != this)
-		{
-			CMyArray tmpCopy(other);
-
-			std::swap(m_begin, tmpCopy.m_begin);
-			std::swap(m_end, tmpCopy.m_end);
-			std::swap(m_endOfCapacity, tmpCopy.m_endOfCapacity);
-		}
-
-		return *this;
-	}
-
-	CMyArray& operator=(CMyArray&& other)
-	{
-		if (&other != this)
-		{
-			DeleteItems(m_begin, m_end);
-
-			m_begin = other.m_begin;
-			m_end = other.m_end;
-			m_endOfCapacity = other.m_endOfCapacity;
-
-			other.m_begin = nullptr;
-			other.m_end = nullptr;
-			other.m_endOfCapacity = nullptr;
-		}
-
-		return *this;
-	}
-
-	void Append(const T& value)
-	{
-		if (m_end == m_endOfCapacity)
-		{
-			size_t newCapacity = std::max(size_t(1), GetCapacity() * 2);
-
-			auto newBegin = RawAlloc(newCapacity);
-			T* newEnd = newBegin;
-
-			try
-			{
-				CopyItems(m_begin, m_end, newBegin, newEnd);
-				new (newEnd) T(value);
-				++newEnd;
-			}
-			catch (const std::exception& e)
-			{
-				DeleteItems(newBegin, newEnd);
-				throw e;
-			}
-
-			DeleteItems(m_begin, m_end);
-
-			m_begin = newBegin;
-			m_end = newEnd;
-			m_endOfCapacity = m_begin + newCapacity;
-		}
-		else
-		{
-			new (m_end) T(value);
-			++m_end;
-		}
-	}
-
-	size_t GetSize() const
-	{
-		return m_end - m_begin;
-	}
-
-	size_t GetCapacity() const
-	{
-		return m_endOfCapacity - m_begin;
-	}
-
-	const T& operator[](size_t index) const
-	{
-		if (index >= GetSize())
-			throw std::out_of_range("requested index is out of range");
-
-		return *(m_begin + index);
-	}
-
-	T& operator[](size_t index)
-	{
-		if (index >= GetSize())
-			throw std::out_of_range("requested index is out of range");
-
-		return *(m_begin + index);
-	}
-
-	void Resize(size_t newSize)
-	{
-		size_t oldSize = GetSize();
-
-		if (newSize < oldSize)
-		{
-			DestroyItems(m_begin + newSize, m_end);
-			m_end = m_begin + newSize;
-		}
-		else
-		{
-			for (size_t currSize = oldSize; currSize < newSize; currSize++)
-			{
-				try
-				{
-					Append(T());
-				}
-				catch (const std::exception& e)
-				{
-					throw e;
-				}
-			}
-		}
-	}
-
-	void Clear()
-	{
-		DeleteItems(m_begin, m_end);
-
-		m_begin = nullptr;
-		m_end = nullptr;
-		m_endOfCapacity = nullptr;
-	}
+	void Append(const T& value);
+	size_t GetSize() const;
+	size_t GetCapacity() const;
+	void Resize(size_t newSize);
+	void Clear();
 
 	iterator begin()
 	{
@@ -262,48 +121,16 @@ public:
 	}
 
 private:
-	static void DeleteItems(T* begin, T* end)
-	{
-		DestroyItems(begin, end);
-		RawDealloc(begin);
-	}
-
-	static void CopyItems(const T* srcBegin, T* srcEnd, T* const dstBegin, T*& dstEnd)
-	{
-		for (dstEnd = dstBegin; srcBegin != srcEnd; ++srcBegin, ++dstEnd)
-		{
-			new (dstEnd) T(*srcBegin);
-		}
-	}
-
-	static void DestroyItems(T* from, T* to)
-	{
-		while (to != from)
-		{
-			--to;
-			to->~T();
-		}
-	}
-
-	static T* RawAlloc(size_t n)
-	{
-		size_t memSize = n * sizeof(T);
-		T* p = static_cast<T*>(malloc(memSize));
-
-		if (!p)
-		{
-			throw std::bad_alloc();
-		}
-		return p;
-	}
-
-	static void RawDealloc(T* p)
-	{
-		free(p);
-	}
+	static void DeleteItems(T* begin, T* end);
+	static void CopyItems(const T* srcBegin, T* srcEnd, T* const dstBegin, T*& dstEnd);
+	static void DestroyItems(T* from, T* to);
+	static T* RawAlloc(size_t n);
+	static void RawDealloc(T* p);
 
 private:
 	T* m_begin = nullptr;
 	T* m_end = nullptr;
 	T* m_endOfCapacity = nullptr;
 };
+
+#include "CMyArray.ipp"
