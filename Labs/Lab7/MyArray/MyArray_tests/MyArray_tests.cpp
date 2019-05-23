@@ -44,7 +44,7 @@ TEST_CASE("Array cleaning test")
 	arr.Append(GetRandomFloat(10));
 	arr.Append(GetRandomFloat(10));
 
-	CHECK_NOTHROW(arr.Clear());
+	arr.Clear();
 
 	CHECK(arr.GetSize() == 0);
 }

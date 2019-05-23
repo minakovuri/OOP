@@ -81,10 +81,10 @@ public:
 
 	CMyArray() = default;
 	CMyArray(const CMyArray& arr);
-	CMyArray(CMyArray&& other);
+	CMyArray(CMyArray&& other) noexcept;
 
 	CMyArray& operator=(CMyArray const& other);
-	CMyArray& operator=(CMyArray&& other);
+	CMyArray& operator=(CMyArray&& other) noexcept;
 
 	const T& operator[](size_t index) const;
 	T& operator[](size_t index);

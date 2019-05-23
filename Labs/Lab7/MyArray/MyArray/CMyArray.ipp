@@ -21,7 +21,7 @@ CMyArray<T>::CMyArray(const CMyArray& arr)
 }
 
 template <typename T>
-CMyArray<T>::CMyArray(CMyArray&& other)
+CMyArray<T>::CMyArray(CMyArray&& other) noexcept
 	: m_begin(other.m_begin)
 	, m_end(other.m_end)
 	, m_endOfCapacity(other.m_endOfCapacity)
@@ -47,7 +47,7 @@ CMyArray<T>& CMyArray<T>::operator=(CMyArray const& other)
 }
 
 template <typename T>
-CMyArray<T>& CMyArray<T>::operator=(CMyArray&& other)
+CMyArray<T>& CMyArray<T>::operator=(CMyArray&& other) noexcept
 {
 	if (&other != this)
 	{
@@ -142,6 +142,12 @@ void CMyArray<T>::Resize(size_t newSize)
 	}
 	else
 	{
+		/*
+		  RawAlloc(newSize);
+		  CopyItems(..)
+		  DestroyItems(..)
+		*/
+
 		for (size_t currSize = oldSize; currSize < newSize; currSize++)
 		{
 			try
