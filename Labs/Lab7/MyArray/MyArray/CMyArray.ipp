@@ -148,6 +148,29 @@ void CMyArray<T>::Resize(size_t newSize)
 		  DestroyItems(..)
 		*/
 
+		// TODO: разобраться, почему не работает
+
+		/*
+		auto newBegin = RawAlloc(newSize);
+		T* newEnd = newBegin + newSize;
+
+		try
+		{
+			CopyItems(m_begin, m_end, newBegin, newEnd);
+		}
+		catch (const std::exception& e)
+		{
+			DeleteItems(newBegin, newEnd);
+			throw e;
+		}
+
+		DeleteItems(m_begin, m_end);
+
+		m_begin = newBegin;
+		m_end = newEnd;
+		m_endOfCapacity = newEnd;
+		*/
+
 		for (size_t currSize = oldSize; currSize < newSize; currSize++)
 		{
 			try
@@ -208,6 +231,7 @@ T* CMyArray<T>::RawAlloc(size_t n)
 	{
 		throw std::bad_alloc();
 	}
+
 	return p;
 }
 

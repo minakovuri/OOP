@@ -121,6 +121,9 @@ TEST_CASE("Test resize array method")
 
 	CHECK_NOTHROW(arr.Resize(0));
 	CHECK(arr.GetSize() == 0);
+
+	CHECK_NOTHROW(arr.Resize(1000));
+	CHECK(arr.GetSize() == 1000);
 }
 
 TEST_CASE("Test assignment operator")
