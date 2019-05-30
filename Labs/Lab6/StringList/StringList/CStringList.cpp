@@ -53,7 +53,7 @@ void CStringList::Clear()
 	m_size = 0;
 }
 
-void CStringList::Insert(CIterator const& it, const std::string& el)
+/*void CStringList::Insert(CIterator const& it, const std::string& el)
 {
 	if (it == begin() || it == cbegin())
 	{
@@ -71,12 +71,12 @@ void CStringList::Insert(CIterator const& it, const std::string& el)
 		it->prev->next = std::move(newNode);
 		++m_size;
 	}
-}
+}*/
 
-void CStringList::Erase(CIterator const& it)
+/*void CStringList::Erase(CIterator const& it)
 {
 
-}
+}*/
 
 std::string& CStringList::GetLastElement()
 {
