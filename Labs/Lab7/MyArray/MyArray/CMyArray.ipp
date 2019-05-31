@@ -149,7 +149,7 @@ void CMyArray<T>::Resize(size_t newSize)
 	}
 	else
 	{
-		if (newSize < oldCapacity)
+		if (newSize <= oldCapacity)
 		{
 			T* newEnd = m_end;
 

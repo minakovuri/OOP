@@ -119,6 +119,9 @@ TEST_CASE("Test resize array method")
 	CHECK(arr[1] == "");
 	CHECK(arr[2] == "");
 
+	CHECK_NOTHROW(arr.Resize(6));
+	CHECK(arr.GetSize() == 6);
+
 	CHECK_NOTHROW(arr.Resize(0));
 	CHECK(arr.GetSize() == 0);
 
