@@ -135,6 +135,13 @@ void CMyArray<T>::Resize(size_t newSize)
 {
 	size_t oldSize = GetSize();
 
+	if (newSize == oldSize)
+	{
+		return;
+	}
+
+	size_t oldCapacity = GetCapacity();
+
 	if (newSize < oldSize)
 	{
 		DestroyItems(m_begin + newSize, m_end);
@@ -142,47 +149,53 @@ void CMyArray<T>::Resize(size_t newSize)
 	}
 	else
 	{
-		/*
-		  RawAlloc(newSize);
-		  CopyItems(..)
-		  DestroyItems(..)
-		*/
-
-		auto newBegin = RawAlloc(newSize);
-		T* newEnd = newBegin + newSize;
-
-		try
+		if (newSize < oldCapacity)
 		{
-			CopyItems(m_begin, m_end, newBegin, newEnd);
+			T* newEnd = m_end;
 
-			for (auto it = m_end; it < newEnd; it++)
-			{
-				new (it) T();
-			}
-		}
-		catch (const std::exception& e)
-		{
-			DeleteItems(newBegin, newEnd);
-			throw e;
-		}
-
-		DeleteItems(m_begin, m_end);
-
-		m_begin = newBegin;
-		m_end = newEnd;
-		m_endOfCapacity = newEnd;
-
-		/*for (size_t currSize = oldSize; currSize < newSize; currSize++)
-		{
 			try
 			{
-				Append(T());
+				for (size_t i = oldSize; i < newSize; i++)
+				{
+					new (newEnd) T();
+					++newEnd;
+				}
 			}
 			catch (const std::exception& e)
 			{
+				DestroyItems(m_end, newEnd);
+				throw e;
+			}	
+
+			m_end = newEnd;
+		}
+		else
+		{
+			auto newBegin = RawAlloc(newSize);
+			T* newEnd = newBegin;
+
+			try
+			{
+				CopyItems(m_begin, m_end, newBegin, newEnd);
+
+				for (size_t i = oldSize; i < newSize; i++)
+				{
+					new (newEnd) T();
+					++newEnd;
+				}
+			}
+			catch (const std::exception& e)
+			{
+				DeleteItems(newBegin, newEnd);
 				throw e;
 			}
-		}*/
+
+			DeleteItems(m_begin, m_end);
+
+			m_begin = newBegin;
+			m_end = newEnd;
+			m_endOfCapacity = newEnd;
+		}
 	}
 }
 
