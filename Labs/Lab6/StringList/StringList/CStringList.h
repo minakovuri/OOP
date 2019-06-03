@@ -1,5 +1,4 @@
 #pragma once
-
 #include "pch.h"
 
 class CStringList
@@ -61,10 +60,12 @@ public:
 	std::string& GetLastElement();
 	std::string const& GetLastElement() const;
 
-	CIterator const begin();
+	CIterator begin();
+	CIterator const begin() const;
 	CIterator const cbegin() const;
 
-	CIterator const end();
+	CIterator end();
+	CIterator const end() const;
 	CIterator const cend() const;
 
 	~CStringList();

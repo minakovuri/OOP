@@ -14,6 +14,7 @@ bool CStringList::IsEmpty() const
 void CStringList::Append(const std::string& el)
 {
 	auto newNode = std::make_unique<Node>(el, m_lastNode, nullptr);
+
 	Node* newLastNode = newNode.get();
 
 	if (m_lastNode)
@@ -90,7 +91,12 @@ std::string const& CStringList::GetLastElement() const
 	return m_lastNode->data;
 }
 
-CStringList::CIterator const CStringList::begin()
+CStringList::CIterator CStringList::begin()
+{
+	return CIterator(m_firstNode.get());
+}
+
+CStringList::CIterator const CStringList::begin() const
 {
 	return CIterator(m_firstNode.get());
 }
@@ -100,16 +106,25 @@ CStringList::CIterator const CStringList::cbegin() const
 	return CIterator(m_firstNode.get());
 }
 
-CStringList::CIterator const CStringList::end()
+CStringList::CIterator CStringList::end()
 {
-	return (m_size == 0u) ? begin() : CIterator(m_lastNode);
+	//return (m_size == 0) ? begin() : CIterator(m_lastNode->next.get());
+	return CIterator(m_lastNode->next.get());
+}
+
+CStringList::CIterator const CStringList::end() const
+{
+	//return (m_size == 0) ? begin() : CIterator(m_lastNode->next.get());
+	return CIterator(m_lastNode->next.get());
 }
 
 CStringList::CIterator const CStringList::cend() const
 {
-	return (m_size == 0u) ? cbegin() : CIterator(m_lastNode);
+	//return (m_size == 0) ? cbegin() : CIterator(m_lastNode->next.get());
+	return CIterator(m_lastNode->next.get());
 }
 
 CStringList::~CStringList()
 {
+	Clear();
 }
