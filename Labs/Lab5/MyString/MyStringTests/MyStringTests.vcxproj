@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\MyString\CMyString.cpp" />
+    <ClCompile Include="..\MyString\CMyStringIterator.cpp" />
     <ClCompile Include="MyStringTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

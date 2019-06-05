@@ -22,6 +22,14 @@ CMyString::CMyString(std::string const& stlString)
 {
 }
 
+CMyString::CMyString(CMyString&& other)
+	: m_pChars(other.m_pChars)
+	, m_length(other.m_length)
+{
+	other.m_pChars = nullptr;
+	other.m_length = 0;
+}
+
 size_t CMyString::GetLength() const
 {
 	return m_length;
@@ -58,6 +66,22 @@ CMyString& CMyString::operator=(const CMyString& other)
 
 		AllocateMemory(length);
 		std::memcpy(m_pChars, pChars, length);
+	}
+
+	return *this;
+}
+
+CMyString& CMyString::operator=(CMyString&& other)
+{
+	if (&other != this)
+	{
+		delete[] m_pChars;
+
+		m_pChars = other.m_pChars;
+		m_length = other.m_length;
+
+		other.m_pChars = nullptr;
+		other.m_length = 0;
 	}
 
 	return *this;
@@ -105,25 +129,36 @@ CMyString& CMyString::operator+=(CMyString const& other)
 
 bool CMyString::operator==(CMyString const& other) const
 {
-	if (m_length != other.m_length)
-	{
-		return false;
-	}
-
-	for (size_t i = 0; i < m_length; i++)
-	{
-		if (m_pChars[i] != other.m_pChars[i])
-		{
-			return false;
-		}
-	}
-
-	return true;
+	return Compare(other) == ComparedValue::Equal;
 }
 
 bool CMyString::operator!=(CMyString const& other) const
 {
 	return !(*this == other);
+}
+
+bool CMyString::operator>(const CMyString& other) const
+{
+	return (Compare(other) == ComparedValue::More);
+}
+
+bool CMyString::operator<(const CMyString& other) const
+{
+	return (Compare(other) == ComparedValue::Less);
+}
+
+bool CMyString::operator>=(const CMyString& other) const
+{
+	const auto comparedValue = Compare(other);
+
+	return (comparedValue == ComparedValue::More) || (comparedValue == ComparedValue::Equal);
+}
+
+bool CMyString::operator<=(const CMyString& other) const
+{
+	const auto comparedValue = Compare(other);
+
+	return (comparedValue == ComparedValue::Less) || (comparedValue == ComparedValue::Equal);
 }
 
 const char& CMyString::operator[](size_t index) const
@@ -161,7 +196,67 @@ void CMyString::DeallocateMemory()
 	delete[] m_pChars;
 }
 
+CMyString::ComparedValue CMyString::Compare(const CMyString& other) const
+{
+	const size_t otherLen = other.m_length;
+
+	if (otherLen < m_length)
+	{
+		return CMyString::ComparedValue::More;
+	}
+
+	if (otherLen > m_length)
+	{
+		return CMyString::ComparedValue::Less;
+	}
+
+	const auto otherStr = other.GetStringData();
+	const auto thisStr = GetStringData();
+
+	for (size_t i = 0; i < m_length; i++)
+	{
+		if (otherStr[i] > thisStr[i])
+		{
+			return CMyString::ComparedValue::Less;
+		}
+
+		if (otherStr[i] < thisStr[i])
+		{
+			return CMyString::ComparedValue::More;
+		}
+	}
+
+	return CMyString::ComparedValue::Equal;
+}
+
 CMyString::~CMyString()
 {
 	DeallocateMemory();
+}
+
+std::ostream& operator<<(std::ostream& os, const CMyString& str)
+{
+	os.write(str.GetStringData(), str.GetLength());
+	return os;
+}
+
+std::istream& operator>>(std::istream& is, CMyString& str)
+{
+	std::string buff;
+
+	is >> buff;
+
+	str = CMyString(buff);
+
+	return is;
+}
+
+CMyString::CIterator CMyString::begin()
+{
+	return CIterator(*this, 0, false);
+}
+
+CMyString::CIterator CMyString::end()
+{
+	return CIterator(*this, m_length, false);
 }

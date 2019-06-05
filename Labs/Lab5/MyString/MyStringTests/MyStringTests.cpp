@@ -9,9 +9,9 @@ void CompareStrings(CMyString const& str, const char* cStr)
 	CHECK(strcmp(str.GetStringData(), cStr) == 0);
 }
 
-void CompareStrings(CMyString const& str, std::string & stlStr)
+void CompareStrings(CMyString const& str, std::string& stlStr)
 {
-	CHECK(str.GetLength() ==  stlStr.length());
+	CHECK(str.GetLength() == stlStr.length());
 	CHECK(strcmp(str.GetStringData(), stlStr.c_str()) == 0);
 }
 
@@ -65,6 +65,16 @@ TEST_CASE("Create from stl string")
 	CompareStrings(str, stlStr);
 }
 
+TEST_CASE("Create with moving constructor")
+{
+	CMyString str("Hello, World!");
+
+	CMyString moveStr(std::move(str));
+
+	CompareStrings(moveStr, "Hello, World!");
+	CompareStrings(str, "");
+}
+
 TEST_CASE("Assign another value")
 {
 	CMyString s1("SomeString");
@@ -82,6 +92,18 @@ TEST_CASE("Try to self-assignment")
 	CMyString s("SomeString");
 
 	CHECK_NOTHROW(s = s);
+}
+
+TEST_CASE("Assign with move")
+{
+	CMyString str("Hello, World!");
+
+	CMyString moveStr;
+
+	moveStr = std::move(str);
+
+	CompareStrings(moveStr, "Hello, World!");
+	CompareStrings(str, "");
 }
 
 TEST_CASE("Concat different types of string")
@@ -163,4 +185,145 @@ TEST_CASE("Get substring")
 	CHECK(str.SubString(0, 14) == "Hello, World!");
 
 	CHECK_THROWS_AS(str.SubString(13, 5), std::out_of_range);
+}
+
+TEST_CASE("Compare strings (more or less)")
+{
+	CMyString str1("123");
+	CMyString str2("1234");
+	CMyString str3("124");
+
+	CHECK(str1 < str2);
+	CHECK(str1 < str3);
+
+	CHECK(str2 > str1);
+	CHECK(str2 > str3);
+
+	CHECK(str1 <= str2);
+	CHECK(str1 <= str3);
+	CHECK(str1 <= str1);
+
+	CHECK(str2 >= str1);
+	CHECK(str2 >= str3);
+	CHECK(str2 >= str2);
+}
+
+TEST_CASE("Write to stream")
+{
+	CMyString str("Hello, World!");
+
+	std::stringstream output;
+	output << str;
+
+	auto outputStr = output.str();
+
+	CHECK(outputStr == "Hello, World!");
+	CHECK(outputStr.length() == 13);
+}
+
+TEST_CASE("Read from stream")
+{
+	CMyString str;
+
+	std::stringstream input;
+	input << "Hello, World!";
+
+	input >> str;
+	CompareStrings(str, "Hello,");
+
+	input >> str;
+	CompareStrings(str, "World!");
+}
+
+TEST_CASE("Loop throw string by iterator from begin to end")
+{
+	CMyString str("01234");
+
+	int i = 0;
+
+	for (auto it = str.begin(); it != str.end(); it++)
+	{
+		switch (i)
+		{
+		case 0:
+			CHECK(*it == '0');
+			break;
+		case 1:
+			CHECK(*it == '1');
+			break;
+		case 2:
+			CHECK(*it == '2');
+			break;
+		case 3:
+			CHECK(*it == '3');
+			break;
+		case 4:
+			CHECK(*it == '4');
+			break;
+		}
+
+		i++;
+	}
+}
+
+TEST_CASE("Loop throw string by iterator from end to begin")
+{
+	CMyString str("01234");
+
+	int i = 5;
+	auto it = str.end();
+	
+	do
+	{
+		it--;
+		i--;
+
+		switch (i)
+		{
+		case 0:
+			CHECK(*it == '0');
+			break;
+		case 1:
+			CHECK(*it == '1');
+			break;
+		case 2:
+			CHECK(*it == '2');
+			break;
+		case 3:
+			CHECK(*it == '3');
+			break;
+		case 4:
+			CHECK(*it == '4');
+			break;
+		}
+	} while (it != str.begin());
+
+	CHECK(i == 0);
+}
+
+TEST_CASE("Check iterator equals")
+{
+	CMyString str("Hello, World!");
+
+	CHECK(str.begin() < str.end());
+	CHECK(str.end() > str.begin());
+
+	CHECK_FALSE(str.begin() > str.end());
+	CHECK_FALSE(str.end() < str.begin());
+	CHECK_FALSE(str.begin() == str.end());
+}
+
+TEST_CASE("Addition of an iterator with a number and numbers with an iterator")
+{
+	CMyString str("Hello, World!");
+
+	auto it = str.begin();
+
+	CHECK(*(it + 2) == 'l');
+	CHECK(*(it + 3) == 'l');
+	CHECK(*(it + 4) == 'o');
+
+	CHECK(*(2 + it) == 'l');
+	CHECK(*(3 + it) == 'l');
+	CHECK(*(4 + it) == 'o');
 }
