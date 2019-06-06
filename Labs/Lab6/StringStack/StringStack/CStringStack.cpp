@@ -30,7 +30,7 @@ void CStringStack::Pop()
 	}
 	else
 	{
-		m_top->data.~basic_string();
+		m_top->data.clear();
 		m_top = m_top->next;
 		--m_size;
 	}
@@ -40,7 +40,7 @@ void CStringStack::Clear() noexcept
 {
 	while (!IsEmpty())
 	{
-		m_top->data.~basic_string();
+		m_top->data.clear();
 		m_top = m_top->next;
 		--m_size;
 	}

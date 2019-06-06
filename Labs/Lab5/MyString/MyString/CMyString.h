@@ -6,7 +6,6 @@ public:
 	class CIterator
 	{
 	public:
-		CIterator() = default;
 		CIterator(CMyString& str, size_t pos, bool isReverse);
 
 		char& operator*() const;
@@ -72,17 +71,17 @@ public:
 	~CMyString();
 
 private:
-	enum class ComparedValue
+	/*enum class ComparedValue
 	{
 		Less,
 		Equal,
 		More,
-	};
+	};*/
 
 	void AllocateMemory(size_t size);
 	void DeallocateMemory();
 
-	ComparedValue Compare(const CMyString& other) const;
+	//ComparedValue Compare(const CMyString& other) const;
 
 private:
 	char* m_pChars = nullptr;

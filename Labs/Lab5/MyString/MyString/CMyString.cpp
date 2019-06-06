@@ -1,6 +1,47 @@
 #include "pch.h"
 #include "CMyString.h"
 
+enum class ComparedValue
+{
+	Less,
+	Equal,
+	More,
+};
+
+ComparedValue Compare(const CMyString& a, const CMyString& b)
+{
+	const size_t aLen = a.GetLength();
+	const size_t bLen = b.GetLength();
+
+	if (aLen < bLen)
+	{
+		return ComparedValue::More;
+	}
+
+	if (aLen > bLen)
+	{
+		return ComparedValue::Less;
+	}
+
+	const auto aStr = a.GetStringData();
+	const auto bStr = b.GetStringData();
+
+	for (size_t i = 0; i < aLen; i++)
+	{
+		if (bStr[i] > aStr[i])
+		{
+			return ComparedValue::More;
+		}
+
+		if (bStr[i] < aStr[i])
+		{
+			return ComparedValue::Less;
+		}
+	}
+
+	return ComparedValue::Equal;
+}
+
 CMyString::CMyString(const char* pString)
 	: CMyString(pString, strlen(pString))
 {
@@ -129,7 +170,7 @@ CMyString& CMyString::operator+=(CMyString const& other)
 
 bool CMyString::operator==(CMyString const& other) const
 {
-	return Compare(other) == ComparedValue::Equal;
+	return Compare(other, *this) == ComparedValue::Equal;
 }
 
 bool CMyString::operator!=(CMyString const& other) const
@@ -139,24 +180,24 @@ bool CMyString::operator!=(CMyString const& other) const
 
 bool CMyString::operator>(const CMyString& other) const
 {
-	return (Compare(other) == ComparedValue::More);
+	return (Compare(other, *this) == ComparedValue::More);
 }
 
 bool CMyString::operator<(const CMyString& other) const
 {
-	return (Compare(other) == ComparedValue::Less);
+	return (Compare(other, *this) == ComparedValue::Less);
 }
 
 bool CMyString::operator>=(const CMyString& other) const
 {
-	const auto comparedValue = Compare(other);
+	const auto comparedValue = Compare(other, *this);
 
 	return (comparedValue == ComparedValue::More) || (comparedValue == ComparedValue::Equal);
 }
 
 bool CMyString::operator<=(const CMyString& other) const
 {
-	const auto comparedValue = Compare(other);
+	const auto comparedValue = Compare(other, *this);
 
 	return (comparedValue == ComparedValue::Less) || (comparedValue == ComparedValue::Equal);
 }
@@ -196,7 +237,7 @@ void CMyString::DeallocateMemory()
 	delete[] m_pChars;
 }
 
-CMyString::ComparedValue CMyString::Compare(const CMyString& other) const
+/*CMyString::ComparedValue CMyString::Compare(const CMyString& other) const
 {
 	const size_t otherLen = other.m_length;
 
@@ -227,7 +268,7 @@ CMyString::ComparedValue CMyString::Compare(const CMyString& other) const
 	}
 
 	return CMyString::ComparedValue::Equal;
-}
+}*/
 
 CMyString::~CMyString()
 {
